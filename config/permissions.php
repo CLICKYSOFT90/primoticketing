@@ -25,25 +25,6 @@ return array(
     array("module" => "Configuration", "key" => "read", "name" => "View Configuration"),
     array("module" => "Configuration", "key" => "update", "name" => "Edit Configuration"),
 
-    array("module" => "Service", "key" => "create", "name" => "Add Service"),
-    array("module" => "Service", "key" => "read", "name" => "View Service"),
-    array("module" => "Service", "key" => "update", "name" => "Edit Service"),
-    array("module" => "Service", "key" => "delete", "name" => "Delete Service"),
-
-    array("module" => "Address", "key" => "create", "name" => "Add Address"),
-    array("module" => "Address", "key" => "read", "name" => "View Address"),
-    array("module" => "Address", "key" => "update", "name" => "Edit Address"),
-    array("module" => "Address", "key" => "delete", "name" => "Delete Address"),
-
-    array("module" => "AccountGroup", "key" => "create", "name" => "Add Account Group"),
-    array("module" => "AccountGroup", "key" => "read", "name" => "View Account Group"),
-    array("module" => "AccountGroup", "key" => "update", "name" => "Edit Account Group"),
-    array("module" => "AccountGroup", "key" => "delete", "name" => "Delete Account Group"),
-
-    array("module" => "AccountType", "key" => "create", "name" => "Add Account Type"),
-    array("module" => "AccountType", "key" => "read", "name" => "View Account Type"),
-    array("module" => "AccountType", "key" => "update", "name" => "Edit Account Type"),
-    array("module" => "AccountType", "key" => "delete", "name" => "Delete Account Type"),
 
     /*MASTER MENUS*/
     array("module" => "Menu", "key" => "masterEntry", "name" => "View Master Entry Menu"),

@@ -213,44 +213,44 @@ return [
     'menu' => [
         [
             'text' => 'Dashboard',
-            'url'  => '',
-            'module' => 'AccountGroup',
-            'permission-slug' => 'read',
-            'rbac' => true,
+            'url'  => 'admin/dashboard',
+            'module' => 'Dashboard',
+            'rbac' => false,
             'icon' => 'icon-bar-chart'
         ],
         [
-            'text' => 'Scanner',
-            'url'  => 'admin/accountGroups',
+            'text' => 'Organizations',
+            'url'  => '#',
             'module' => 'AccountGroup',
             'permission-slug' => 'read',
             'rbac' => true,
-            'icon' => 'far fa-dot-circle'
-        ],
-        [
-            'text' => 'Event Manager',
-            'url'  => 'admin/accountGroups',
-            'module' => 'AccountGroup',
-            'permission-slug' => 'read',
-            'rbac' => true,
-            'icon' => 'far fa-calendar-alt'
+            'icon' => 'icon-users'
         ],
         [
             'text' => 'Reporting',
-            'url'  => 'admin/accountGroups',
+            'url'  => '#',
             'module' => 'AccountGroup',
             'permission-slug' => 'read',
             'rbac' => true,
             'icon' => 'far fa-chart-bar'
         ],
         [
+            'text' => 'Event List',
+            'url'  => '#',
+            'module' => 'AccountGroup',
+            'permission-slug' => 'read',
+            'rbac' => true,
+            'icon' => 'far fa-calendar-alt'
+        ],
+        /*[
             'text' => 'Global Settings',
             'url'  => 'admin/accountGroups',
             'module' => 'AccountGroup',
             'permission-slug' => 'read',
             'rbac' => true,
-            'icon' => 'far fa-sliders-h'
-        ],
+            'icon' => 'far fa-sliders-h',
+            'style' => 'font-weight:900',
+        ],*/
 
         /*[
             'text' => 'Master Data Entry',

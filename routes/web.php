@@ -37,7 +37,7 @@ Route::prefix('admin')->group(function() {
 });
 
 Route::middleware(['auth:admin'])->prefix('admin')->namespace('Admin')->group(function () {
-    Route::get('/{url?}', 'Dashboard\ManageDashboardController@index')->where('url','home|dashboard|')->name('admin.dashboard');
+    Route::get('/{url?}', 'Dashboard\ManageDashboardController@index')->where('url','dashboard|')->name('admin.dashboard');
     //Route::get('dashboard', 'Dashboard\ManageDashboardController@index')->name('dashboard');
     //Route::get('home', 'Dashboard\ManageDashboardController@index');
     //Route::post('dashboard', 'Dashboard\ManageDashboardController@index')->name('dashboard');
