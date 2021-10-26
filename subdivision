@@ -1,0 +1,480 @@
+['United Kingdom'=>
+'GB_UKM',
+'Great Britain'=>
+'GB_GBN',
+'Scotland'=>
+'GB_SCT',
+'North Lanarkshire'=>
+'GB_NLK',
+'Renfrewshire'=>
+'GB_RFW',
+'Perth and Kinross'=>
+'GB_PKN',
+'Angus'=>
+'GB_ANS',
+'Falkirk'=>
+'GB_FAL',
+'Glasgow City'=>
+'GB_GLG',
+'Moray'=>
+'GB_MRY',
+'Dumfries and Galloway'=>
+'GB_DGY',
+'East Lothian'=>
+'GB_ELN',
+'South Ayrshire'=>
+'GB_SAY',
+'Aberdeenshire'=>
+'GB_ABD',
+'Eilean Siar'=>
+'GB_ELS',
+'North Ayrshire'=>
+'GB_NAY',
+'West Lothian'=>
+'GB_WLN',
+'Argyll and Bute'=>
+'GB_AGB',
+'Clackmannanshire'=>
+'GB_CLK',
+'East Dunbartonshire'=>
+'GB_EDU',
+'Fife'=>
+'GB_FIF',
+'Midlothian'=>
+'GB_MLN',
+'Orkney Islands'=>
+'GB_ORK',
+'Scottish Borders, The'=>
+'GB_SCB',
+'South Lanarkshire'=>
+'GB_SLK',
+'Stirling'=>
+'GB_STG',
+'Shetland Islands'=>
+'GB_ZET',
+'West Dunbartonshire'=>
+'GB_WDU',
+'Aberdeen City'=>
+'GB_ABE',
+'Dundee City'=>
+'GB_DND',
+'East Ayrshire'=>
+'GB_EAY',
+'East Renfrewshire'=>
+'GB_ERW',
+'Highland'=>
+'GB_HLD',
+'Inverclyde'=>
+'GB_IVC',
+'Edinburgh, City of'=>
+'GB_EDH',
+'England and Wales'=>
+'GB_EAW',
+'England'=>
+'GB_ENG',
+'Greenwich'=>
+'GB_GRE',
+'Halton'=>
+'GB_HAL',
+'Haringey'=>
+'GB_HRY',
+'Kingston upon Hull'=>
+'GB_KHL',
+'North East Lincolnshire'=>
+'GB_NEL',
+'Norfolk'=>
+'GB_NFK',
+'Portsmouth'=>
+'GB_POR',
+'South Gloucestershire'=>
+'GB_SGC',
+'West Berkshire'=>
+'GB_WBK',
+'Wandsworth'=>
+'GB_WND',
+'Warrington'=>
+'GB_WRT',
+'Isles of Scilly'=>
+'GB_IOS',
+'Bedford'=>
+'GB_BDF',
+'Barking and Dagenham'=>
+'GB_BDG',
+'Buckinghamshire'=>
+'GB_BKM',
+'Bristol, City of'=>
+'GB_BST',
+'Cambridgeshire'=>
+'GB_CAM',
+'Doncaster'=>
+'GB_DNC',
+'Kirklees'=>
+'GB_KIR',
+'London, City of'=>
+'GB_LND',
+'Luton'=>
+'GB_LUT',
+'Manchester'=>
+'GB_MAN',
+'Milton Keynes'=>
+'GB_MIK',
+'North Lincolnshire'=>
+'GB_NLN',
+'North Somerset'=>
+'GB_NSM',
+'North Tyneside'=>
+'GB_NTY',
+'Plymouth'=>
+'GB_PLY',
+'Reading'=>
+'GB_RDG',
+'Shropshire'=>
+'GB_SHR',
+'Sunderland'=>
+'GB_SND',
+'South Tyneside'=>
+'GB_STY',
+'Southwark'=>
+'GB_SWK',
+'Wirral'=>
+'GB_WRL',
+'Westminster'=>
+'GB_WSM',
+'Bath and North East Somerset'=>
+'GB_BAS',
+'Birmingham'=>
+'GB_BIR',
+'Blackpool'=>
+'GB_BPL',
+'Cheshire West and Chester'=>
+'GB_CHW',
+'Hounslow'=>
+'GB_HNS',
+'Hertfordshire'=>
+'GB_HRT',
+'Kingston upon Thames'=>
+'GB_KTT',
+'Leicestershire'=>
+'GB_LEC',
+'Rochdale'=>
+'GB_RCH',
+'Rotherham'=>
+'GB_ROT',
+'Suffolk'=>
+'GB_SFK',
+'Surrey'=>
+'GB_SRY',
+'Southampton'=>
+'GB_STH',
+'Stockton-on-Tees'=>
+'GB_STT',
+'Swindon'=>
+'GB_SWD',
+'Telford and Wrekin'=>
+'GB_TFW',
+'Windsor and Maidenhead'=>
+'GB_WNM',
+'Worcestershire'=>
+'GB_WOR',
+'West Sussex'=>
+'GB_WSX',
+'Bexley'=>
+'GB_BEX',
+'Bournemouth'=>
+'GB_BMH',
+'Bradford'=>
+'GB_BRD',
+'Bury'=>
+'GB_BUR',
+'Cheshire East'=>
+'GB_CHE',
+'Cornwall'=>
+'GB_CON',
+'Hampshire'=>
+'GB_HAM',
+'Liverpool'=>
+'GB_LIV',
+'North Yorkshire'=>
+'GB_NYK',
+'Oxfordshire'=>
+'GB_OXF',
+'Richmond upon Thames'=>
+'GB_RIC',
+'Rutland'=>
+'GB_RUT',
+'Sandwell'=>
+'GB_SAW',
+'Sheffield'=>
+'GB_SHF',
+'Slough'=>
+'GB_SLG',
+'Thurrock'=>
+'GB_THR',
+'Torbay'=>
+'GB_TOB',
+'Waltham Forest'=>
+'GB_WFT',
+'Wiltshire'=>
+'GB_WIL',
+'Wakefield'=>
+'GB_WKF',
+'York'=>
+'GB_YOR',
+'Calderdale'=>
+'GB_CLD',
+'Coventry'=>
+'GB_COV',
+'Derby'=>
+'GB_DER',
+'Devon'=>
+'GB_DEV',
+'Dudley'=>
+'GB_DUD',
+'Gloucestershire'=>
+'GB_GLS',
+'Hackney'=>
+'GB_HCK',
+'Harrow'=>
+'GB_HRW',
+'Isle of Wight'=>
+'GB_IOW',
+'Islington'=>
+'GB_ISL',
+'Kensington and Chelsea'=>
+'GB_KEC',
+'Lambeth'=>
+'GB_LBH',
+'Leeds'=>
+'GB_LDS',
+'Newcastle upon Tyne'=>
+'GB_NET',
+'Nottingham'=>
+'GB_NGM',
+'Salford'=>
+'GB_SLF',
+'Solihull'=>
+'GB_SOL',
+'Stoke-on-Trent'=>
+'GB_STE',
+'Wolverhampton'=>
+'GB_WLV',
+'Wokingham'=>
+'GB_WOK',
+'Barnet'=>
+'GB_BNE',
+'Brighton and Hove'=>
+'GB_BNH',
+'Barnsley'=>
+'GB_BNS',
+'Darlington'=>
+'GB_DAL',
+'East Riding of Yorkshire'=>
+'GB_ERY',
+'Essex'=>
+'GB_ESS',
+'Havering'=>
+'GB_HAV',
+'Hillingdon'=>
+'GB_HIL',
+'Hartlepool'=>
+'GB_HPL',
+'Kent'=>
+'GB_KEN',
+'Leicester'=>
+'GB_LCE',
+'Middlesbrough'=>
+'GB_MDB',
+'Merton'=>
+'GB_MRT',
+'Redbridge'=>
+'GB_RDB',
+'Sefton'=>
+'GB_SFT',
+'St. Helens'=>
+'GB_SHN',
+'Trafford'=>
+'GB_TRF',
+'Tower Hamlets'=>
+'GB_TWH',
+'Warwickshire'=>
+'GB_WAR',
+'Walsall'=>
+'GB_WLL',
+'Derbyshire'=>
+'GB_DBY',
+'Dorset'=>
+'GB_DOR',
+'Enfield'=>
+'GB_ENF',
+'Gateshead'=>
+'GB_GAT',
+'Hammersmith and Fulham'=>
+'GB_HMF',
+'Knowsley'=>
+'GB_KWL',
+'Lancashire'=>
+'GB_LAN',
+'Lewisham'=>
+'GB_LEW',
+'Lincolnshire'=>
+'GB_LIN',
+'Northumberland'=>
+'GB_NBL',
+'Poole'=>
+'GB_POL',
+'Redcar and Cleveland'=>
+'GB_RCC',
+'Staffordshire'=>
+'GB_STS',
+'Tameside'=>
+'GB_TAM',
+'Wigan'=>
+'GB_WGN',
+'Blackburn with Darwen'=>
+'GB_BBD',
+'Brent'=>
+'GB_BEN',
+'Bolton'=>
+'GB_BOL',
+'Bracknell Forest'=>
+'GB_BRC',
+'Central Bedfordshire'=>
+'GB_CBF',
+'Cumbria'=>
+'GB_CMA',
+'Camden'=>
+'GB_CMD',
+'Croydon
+'GB_CRY',
+'Durham County'=>
+'GB_DUR',
+'East Sussex'=>
+'GB_ESX',
+'Herefordshire'=>
+'GB_HEF',
+'Medway'=>
+'GB_MDW',
+'Northamptonshire'=>
+'GB_NTH',
+'Nottinghamshire'=>
+'GB_NTT',
+'Newham'=>
+'GB_NWM',
+'Oldham'=>
+'GB_OLD',
+'Peterborough'=>
+'GB_PTE',
+'Stockport'=>
+'GB_SKP',
+'Somerset'=>
+'GB_SOM',
+'Southend-on-Sea'=>
+'GB_SOS',
+'Sutton'=>
+'GB_STN',
+'Bromley'=>
+'GB_BRY',
+'Ealing'=>
+'GB_EAL',
+'Wales'=>
+'GB_WLS',
+'Neath Port Talbot'=>
+'GB_NTL',
+'Rhondda, Cynon, Taff'=>
+'GB_RCT',
+'Bridgend'=>
+'GB_BGE',
+'Newport'=>
+'GB_NWP',
+'Blaenau Gwent'=>
+'GB_BGW',
+'Carmarthenshire'=>
+'GB_CMN',
+'Denbighshire'=>
+'GB_DEN',
+'Flintshire'=>
+'GB_FLN',
+'Merthyr Tydfil'=>
+'GB_MTY',
+'Powys'=>
+'GB_POW',
+'Vale of Glamorgan, The'=>
+'GB_VGL',
+'Isle of Anglesey'=>
+'GB_AGY',
+'Caerphilly'=>
+'GB_CAY',
+'Gwynedd'=>
+'GB_GWN',
+'Wrexham'=>
+'GB_WRX',
+'Ceredigion'=>
+'GB_CGN',
+'Monmouthshire'=>
+'GB_MON',
+'Pembrokeshire'=>
+'GB_PEM',
+'Torfaen'=>
+'GB_TOF',
+'Cardiff'=>
+'GB_CRF',
+'Swansea'=>
+'GB_SWA',
+'Conwy'=>
+'GB_CWY',
+'Northern Ireland'=>
+'GB_NIR',
+'North Down'=>
+'GB_NDN',
+'Newry and Mourne'=>
+'GB_NYM',
+'Antrim'=>
+'GB_ANT',
+'Down'=>
+'GB_DOW',
+'Derry'=>
+'GB_DRY',
+'Fermanagh'=>
+'GB_FER',
+'Newtownabbey'=>
+'GB_NTA',
+'Ards'=>
+'GB_ARD',
+'Craigavon'=>
+'GB_CGV',
+'Lisburn'=>
+'GB_LSB',
+'Banbridge'=>
+'GB_BNB',
+'Castlereagh'=>
+'GB_CSR',
+'Moyle'=>
+'GB_MYL',
+'Omagh'=>
+'GB_OMH',
+'Carrickfergus'=>
+'GB_CKF',
+'Magherafelt'=>
+'GB_MFT',
+'Armagh'=>
+'GB_ARM',
+'Ballymena'=>
+'GB_BLA',
+'Limavady'=>
+'GB_LMV',
+'Strabane'=>
+'GB_STB',
+'Cookstown'=>
+'GB_CKT',
+'Dungannon and South Tyrone'=>
+'GB_DGN',
+'Larne'=>
+'GB_LRN',
+'Belfast'=>
+'GB_BFS',
+'Ballymoney'=>
+'GB_BLY',
+'Coleraine'=>
+'GB_CLR'
+];
+AIzaSyA2R3EBUQfI5amMJRppG1JrG353e80w1uc
