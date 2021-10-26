@@ -5,7 +5,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 - create .env file on root and add details.
 - create file database.php file on config folder
-- run composer install command on terminal in project folder
+- run composer install --ignore-platform-reqs command on terminal in project folder
 - run composer dump-autoload on terminal in project folder
 - run php artisan migrate:fresh --seed on terminal in project folder
 
