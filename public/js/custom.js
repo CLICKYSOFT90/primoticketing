@@ -45,7 +45,7 @@ $(document).on("keyup", "#search-menu-term", function () {
 
 
 // Confirm Button Action
-$('.datatable').on('click','.delete-confirm-id', function(){
+$('.datatable,.dataTable').on('click','.delete-confirm-id', function(){
     var id = $(this).attr('data-id');
     if (id != undefined) {
         swal({
@@ -63,7 +63,7 @@ $('.datatable').on('click','.delete-confirm-id', function(){
     }
 });
 
-$('.datatable').on('click','.status-confirm-id', function(){
+$('.datatable','.dataTable').on('click','.status-confirm-id', function(){
     var id = $(this).attr('data-id');
     if (id != undefined) {
         swal({
@@ -81,7 +81,7 @@ $('.datatable').on('click','.status-confirm-id', function(){
     }
 });
 
-$('.datatable').on('click','.dock-ge-confirm-id', function(){
+$('.datatable','.dataTable').on('click','.dock-ge-confirm-id', function(){
     var id = $(this).attr('data-id');
     if (id != undefined) {
         swal({
@@ -98,7 +98,7 @@ $('.datatable').on('click','.dock-ge-confirm-id', function(){
     }
 });
 
-$('.datatable').on('click','.snapshot-confirm-id', function(){
+$('.datatable','.dataTable').on('click','.snapshot-confirm-id', function(){
     var id = $(this).attr('data-id');
     if (id != undefined) {
         swal({
@@ -117,7 +117,7 @@ $('.datatable').on('click','.snapshot-confirm-id', function(){
 });
 
 // Confirm Button Action
-$('.datatable').on('click','.change-status-confirm-id', function(){
+$('.datatable','.dataTable').on('click','.change-status-confirm-id', function(){
     var id = $(this).attr('data-id');
     var message = $(this).attr('data-message');
     if (id != undefined) {
@@ -135,7 +135,7 @@ $('.datatable').on('click','.change-status-confirm-id', function(){
     }
 });
 
-$('.datatable').on('click','.close-ge-confirm-id', function(){
+$('.datatable','.dataTable').on('click','.close-ge-confirm-id', function(){
     var id = $(this).attr('data-id');
     if (id != undefined) {
         swal({
@@ -153,7 +153,7 @@ $('.datatable').on('click','.close-ge-confirm-id', function(){
 });
 
 // revivive Button Action
-$('.datatable').on('click','.btn-revive', function(){
+$('.datatable','.dataTable').on('click','.btn-revive', function(){
     event.preventDefault();
     var route = $(this).attr('data-route');
     if (route != undefined) {
@@ -171,7 +171,7 @@ $('.datatable').on('click','.btn-revive', function(){
     }
 });
 
-$('.datatable').on('click','.freeze-confirm-id', function(){
+$('.datatable','.dataTable').on('click','.freeze-confirm-id', function(){
     var id = $(this).attr('data-id');
     if (id != undefined) {
         swal({

@@ -220,8 +220,8 @@ return [
         ],
         [
             'text' => 'Organizations',
-            'url'  => '#',
-            'module' => 'AccountGroup',
+            'url'  => 'admin/organization',
+            'module' => 'Organizations',
             'permission-slug' => 'read',
             'rbac' => true,
             'icon' => 'icon-users'

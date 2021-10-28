@@ -25,6 +25,10 @@ return array(
     array("module" => "Configuration", "key" => "read", "name" => "View Configuration"),
     array("module" => "Configuration", "key" => "update", "name" => "Edit Configuration"),
 
+    array("module" => "Organizations", "key" => "create", "name" => "Add Organization"),
+    array("module" => "Organizations", "key" => "read", "name" => "View Organization"),
+    array("module" => "Organizations", "key" => "update", "name" => "Edit Organization"),
+    array("module" => "Organizations", "key" => "delete", "name" => "Delete Organization"),
 
     /*MASTER MENUS*/
     array("module" => "Menu", "key" => "masterEntry", "name" => "View Master Entry Menu"),

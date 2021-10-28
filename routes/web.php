@@ -58,6 +58,7 @@ Route::middleware(['auth:admin', 'permissions'])->namespace('Admin')->prefix('ad
     Route::get('download/{model}', 'File\ManageFileController@download')->name('download');
     Route::resource('menu', 'Menu\ManageMenuController');
     Route::resource('notification', 'Notification\ManageNotificationController');
+    Route::resource('organization', 'Organization\ManageOrganizationController');
 
     /*Change Password*/
     Route::get('changePassword', 'Users\ChangePasswordController@index')->middleware('auth')->name('change-password');
