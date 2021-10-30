@@ -39,7 +39,7 @@ class Organization extends BaseModel implements HasMedia
                         </a>';
         }
 
-        if(\Common::canDelete(static::$module)) {
+       /* if(\Common::canDelete(static::$module)) {
            $return .= '<form class="form-inline" action="'.route('organization.destroy', $data->id).'" method="post" id="delete_form_'.$data->id.'">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="_token" value="'.csrf_token().'">
@@ -47,7 +47,7 @@ class Organization extends BaseModel implements HasMedia
                                 <i class="fas fa-trash"></i>
                             </a>
                         </form>';
-        }
+        }*/
         $return .= '</div>';
         return $return;
     }

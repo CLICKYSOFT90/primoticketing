@@ -15,6 +15,7 @@
 
     <link href="{{ asset('css/simple-line-icons.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
+
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN PAGE LEVEL PLUGINS -->
     @yield('page_css')
