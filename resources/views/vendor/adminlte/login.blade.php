@@ -46,8 +46,8 @@
             <div id="error"></div>
             <div class="form-group form-md-line-input">
                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                <label class="control-label visible-ie8 visible-ie9">Email</label>
-                <input class="form-control" type="text" placeholder="Email" name="email" id="username" autocomplete="new-username">
+                <label class="control-label visible-ie8 visible-ie9">Username</label>
+                <input class="form-control" type="text" placeholder="Username" name="username" id="username" autocomplete="new-username">
                 <span class="help-block help-block-error"> </span>
                 <div class="form-control-focus"> </div>
             </div>

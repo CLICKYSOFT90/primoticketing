@@ -24,9 +24,9 @@ Route::post('webhookServiceAddress',function(){
 })->name('webhookServiceAddress');
 
 Route::prefix('admin')->group(function() {
-    Route::get('/login', 'Auth\LoginController@showLoginForm')->name('admin.login');
-    Route::post('/login', 'Auth\LoginController@login')->name('admin.login.submit');
-    Route::post('/logout', 'Auth\LoginController@logout')->name('admin.logout');
+    Route::get('/login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.login');
+    Route::post('/login', 'Admin\Auth\LoginController@login')->name('admin.login.submit');
+    Route::post('/logout', 'Admin\Auth\LoginController@logout')->name('admin.logout');
 
     // Password Reset Routes...
     Route::get('password/reset', 'Admin\Auth\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
