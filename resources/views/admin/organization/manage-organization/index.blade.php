@@ -77,7 +77,7 @@
                     {data: 'active'},
 
                 ],
-                dom: 'Bfrtip',
+                dom: 'lBfrtip',
                 buttons: [
                     {
                         extend: 'csv',
@@ -92,9 +92,9 @@
                 "fnRowCallback": function (nRow, aData, iDisplayIndex) {
                     var row = $(nRow);
                     row.attr("id", 'user_' + aData['7']);
-                    var userID = aData['7'];
+                    var userID = aData['0'];
 
-                    var userImage = aData['2'];
+                   // var userImage = aData['2'];
 
 //            if(userImage == null) {
 //                userImage = '../images/avatar/no-image.png'

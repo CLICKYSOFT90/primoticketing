@@ -8,6 +8,7 @@ use App\Notifications\ResetPassword;
 use App\TraitLibraries\ModelHelper;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Validation\Rule;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\Builder;
@@ -31,7 +32,7 @@ class Admin extends Authenticatable
     }
 
     protected $fillable = [
-        'id',  'name','username', 'email', 'password','company_id','contactNumber','alphaRole', 'active','userType',
+        'id',  'name','username', 'email', 'password','organizationId','contactNumber','alphaRole', 'active','userType','timezone',
         'last_login_at',
         'last_login_ip',
     ];
@@ -59,40 +60,61 @@ class Admin extends Authenticatable
 
     public static function validationRules($id = 0){
         $rules['name'] = ['required', 'regex:/^[\pL\s\-]+$/u'];
-        $rules['contactNumber'] = ['nullable', 'numeric'];
+        $rules['email'] = ['required','email','unique:users,email,'.$id];
+        $rules['username'] = ['required','regex:/^\S*$/u','unique:users,username,'.$id];
         if(empty($id)){
-            $rules['email'] = ['required', 'unique:users,email'];
             $rules['password'] = ['required'];
         }
+        $rules['contactNumber'] = ['nullable', 'numeric'];
+        $rules['active'] = [Rule::in(["1","0"])];
         $rules['alphaRole'] = ['required'];
-        $rules['role_id'] = ['required_if:alphaRole,USERS'];
+        $rules['role_id'] = [function($attr,$value,$fail) use ($id){
+            if(request()->input('alphaRole')=="USERS"){
+                foreach (request()->input('role_id') as $role){
+                    if($role=="" || $role==0){
+                        $fail("Please select role");
+                        break;
+                    }
+                }
+                $organizationRole = Role::where('roleName','Organization')->first();
+                if(!empty($organizationRole) && in_array($organizationRole->id,request()->input('role_id'))){
+                    if(empty(request()->organizationId)){
+                        $fail("Organization field is required");
+                    }
+                    else if(empty(Organization::find($value)))
+                    {
+                        $fail("Invalid organization selected.");
+                    }
+
+                }
+            }
+
+        }];
+
         return $rules;
     }
 
     public static function getList(){
-        $return = User::where('email', '<>', 'admin@admin.com');
+        $return = Admin::with('organization')->where('username', '<>', 'admin');
         return $return;
     }
 
     public static function actionButtons($data){
-        $return = '<div class="btn-group" role="group">
-                      <a class="btn" href="'.route('users.show', $data->id).'" title="View">
-                            <i class="fas fa-eye"></i>
-                        </a>';
+        $return = '<div class="btn-group" role="group">';
 
         if(\Common::canUpdate(static::$module)) {
-          $return .= '<a class="btn" href="'.route('users.edit', $data->id).'" title="Edit">
+          $return .= '<a class="" href="'.route('users.edit', $data->id).'" title="Edit">
                             <i class="fas fa-edit"></i>
-                        </a>';
+                        </a> ';
         }
 
         if(\Common::canDelete(static::$module)) {
-           $return .= '<form action="'.route('users.destroy', $data->id).'" method="post" id="delete_form_'.$data->id.'">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="'.csrf_token().'">
-                            <a class="btn delete-confirm-id" title="Delete" data-id="'.$data->id.'">
+           $return .= ' <a class=" delete-confirm-id" title="Delete" data-id="'.$data->id.'">
                                 <i class="fas fa-trash"></i>
                             </a>
+                            <form action="'.route('users.destroy', $data->id).'" method="post" id="delete_form_'.$data->id.'">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="'.csrf_token().'">
                         </form>';
         }
         $return .= '</div>';
@@ -103,19 +125,10 @@ class Admin extends Authenticatable
         return $this->roles()->pluck('id', 'roleName')->all();
     }
 
-    public function drivers()
-    {
-        return $this->hasMany(Driver::class, 'userId', 'id');
-    }
 
-    public function transporters()
+    public function organization()
     {
-        return $this->hasMany(Transporter::class, 'userId', 'id');
-    }
-
-    public function customers()
-    {
-        return $this->hasMany(Customer::class, 'userId', 'id');
+        return $this->belongsTo(Organization::class, 'organizationId', 'id');
     }
 
     public static function availableUser(){

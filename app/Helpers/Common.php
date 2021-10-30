@@ -95,17 +95,17 @@ class Common
         $request = (object)$_POST;
         $return = [];
         if (!empty(@$request->term)) {
-            if (@$request->source == "customer") {
+            if (@$request->source == "organization") {
                 $query = "SELECT
                                 id,
-                                fullName as text
-                            FROM parties
-                            WHERE 1 AND type = 'customer'";
+                                organization_name as text
+                            FROM organizations
+                            WHERE 1 AND active = 1";
 
                 if (@$request->isDefault == 1) {
                     $query .= " AND id = '" . $request->term . "'";
                 } else {
-                    $query .= " AND (fullName LIKE '%" . $request->term . "%')";
+                    $query .= " AND (organization_name LIKE '%" . $request->term . "%')";
                 }
             }
 
@@ -190,6 +190,12 @@ class Common
                 } else {
                     $query .= " AND (name LIKE '%" . $request->term . "%')";
                 }
+            }
+            if (!empty(@$query)) {
+                if (empty($return)) {
+                    $return = DB::select($query);
+                }
+                echo json_encode($return);
             }
         }
     }
@@ -341,6 +347,25 @@ class Common
                 'body' => $body,
                 'response' => $response,
             ]);
+        }
+    }
+
+    public static function CTL($dateTime, $is_date = false, $dateFormat = "")
+    {
+        if (empty($dateTime)) {
+            return null;
+        }
+
+        if (empty($dateFormat)) {
+            $dateFormat = SELF::getConfig('company', 'dateFormat');
+        }
+
+        if ($is_date) {
+            return \Timezone::convertToLocal(\Carbon\Carbon::parse($dateTime), $dateFormat);
+        } else if (!empty(explode(' ', $dateTime)[1])) {
+            return \Timezone::convertToLocal(\Carbon\Carbon::parse($dateTime), $dateFormat . ' g:i:s a');
+        } else {
+            return \Carbon\Carbon::parse($dateTime)->format($dateFormat);
         }
     }
 

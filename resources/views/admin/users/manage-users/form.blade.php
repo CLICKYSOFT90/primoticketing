@@ -1,179 +1,152 @@
 @extends('adminlte::page')
 @section('title', (($model->exists)?'Edit':'New').' User '.(($model->exists)?'#'.$model->id:''))
 @section('content_header')
-<div class="row">
-    <div class="col-sm-6">
-        <h1>@yield('title')</h1>
-    </div>
-    <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('users.index') }}">User</a></li>
-            <li class="breadcrumb-item active">{{ ($model->exists)?'Edit #'.$model->id:'New' }}</li>
-        </ol>
-    </div>
-</div>
 @stop
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-primary card-outline">
-                <form method="post" class="form"
-                enctype="multipart/form-data"
-                action="{{ ($model->exists)? route('users.update', [$model->id]): route('users.store') }}">
-                    <input type="hidden" name="userType" value="Admin">
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-green">
+                <i class="icon-user font-green"></i>
+                <span class="caption-subject bold uppercase">{{$model->exists ? "Update" :"Create"}} User</span>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <form method="post" class="form"
+                  enctype="multipart/form-data"
+                  action="{{ ($model->exists)? route('users.update', [$model->id]): route('users.store') }}">
+                <input type="hidden" name="userType" value="Admin">
                 @if ($model->exists)
-                @method('PUT')
+                    @method('PUT')
                 @endif
                 @csrf
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="user_name">Full Name</label>
-                                <input type="text" id="user_name"
-                                class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                value="{{ (old('name'))? old('name'): $model->name }}"
-                                placeholder="Full Name"
-                                name="name" autofocus>
+                <div class="row">
+                    @csrf
+                    @if($model->exists)
+                        <input type="hidden" name="id" id="id" value="{{ $model->id }}">
+                    @endif
+                    <div class="col-md-12">
+                        <div class="formbox row">
+                            <div class="form-group form-md-line-input col-md-6">
+                                <label class="control-label visible-ie8 visible-ie9">Full Name</label>
+                                <input class="form-control" type="text" placeholder="Name" name="name" value="{{ old('name',$model->name)}}">
+                                <span class="help-block help-block-error">Full Name</span>
+                                <div class="form-control-focus"> </div>
+                            </div>
+                            <div class="form-group form-md-line-input col-md-6">
+                                <label class="control-label visible-ie8 visible-ie9">Email</label>
+                                <input class="form-control" id="user_email" type="text" placeholder="Email" name="email" value="{{ old('email',$model->email)}}">
+                                <span class="help-block help-block-error">Email</span>
+                                <div class="form-control-focus"> </div>
+                            </div>
+                            <div class="form-group form-md-line-input col-md-6">
+                                <label class="control-label visible-ie8 visible-ie9">Username</label>
+                                <input class="form-control" type="text" placeholder="Username" name="username" value="{{ old('username',$model->username)}}">
+                                <span class="help-block help-block-error">Username</span>
+                                <div class="form-control-focus"> </div>
+                            </div>
+                            <div class="form-group form-md-line-input col-md-6">
+                                <label class="control-label visible-ie8 visible-ie9">Password</label>
+                                <input class="form-control" type="text" placeholder="Password" name="password" value="{{ old('password',$model->password)}}">
+                                <span class="help-block help-block-error">Password</span>
+                                <div class="form-control-focus"> </div>
+                            </div>
+                            <div class="form-group form-md-line-input col-md-6">
+                                <label class="control-label visible-ie8 visible-ie9">Contact Number</label>
+                                <input class="form-control" type="text" placeholder="Contact Number" name="contactNumber" value="{{ old('contactNumber',$model->contactNumber)}}">
+                                <span class="help-block help-block-error">Contact Number</span>
+                                <div class="form-control-focus"> </div>
+                            </div>
+                            <div class="form-group form-md-line-input col-md-6">
+                                <label class="control-label visible-ie8 visible-ie9">Status</label>
+                                <select class="form-control" name="active">
+                                    <option value="">Select Status</option>
+                                    <option value="1" {{  old('active',$model->active == "1") ? 'selected' : '' }}>Active</option>
+                                    <option value="0" {{  old('active',($model->exists && $model->active === "0") ? 'selected' : '') }}>InActive</option>
+                                </select>
+                                <span class="help-block help-block-error">Status</span>
+                                <div class="form-control-focus"> </div>
+                            </div>
+                            <div class="form-group form-md-line-input col-md-6">
+                                <label class="control-label visible-ie8 visible-ie9">Alpha Role</label>
+                                <select id="users_alphaRole" name="alphaRole"
+                                        class="form-control select2" style="width: 100%">
+                                    <option value="">Select Alpha Role</option>
+                                    @foreach(['SUPER', 'USERS'] as  $title)
+                                        <option value="{{$title}}" {{ (old('alphaRole') == $title) ? 'selected=""':'' }} {{ ($model->alphaRole == $title) ? 'selected=""':''}} >
+                                            {{ str_replace('_',' ',$title) }}</option>
+                                    @endForeach
+                                </select>
+                                <span class="help-block help-block-error">Alpha Role</span>
+                                <div class="form-control-focus"> </div>
+                            </div>
+                            <div class="form-group form-md-line-input col-md-6 req-by-user" id="selected_rold">
+                                <label class="control-label visible-ie8 visible-ie9">Role</label>
+                                <select id="role_id" name="role_id[]" class="form-control{{ $errors->has('role_id') ? ' is-invalid' : '' }} select2"  style="width: 100%;">
+                                    <option value="">Select Role</option>
+                                    @foreach($roles as  $key => $title)
+                                        <option value="{{$key}}" {{ (old('role_id') == null) ? '' : (in_array($key, old('role_id')) ? "selected" : "") }} {{in_array($key,$assigned_role_array) ? "selected" : "" }}>{{ $title }}</option>
+                                    @endForeach
+                                </select>
+                                <span class="help-block help-block-error">Role</span>
+                                <div class="form-control-focus"> </div>
+                            </div>
 
-                                @if ($errors->has('name'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('name') }}</strong>
-                                </span>
-                                @endif
+                            <div class="form-group form-md-line-input req-by-user col-md-6" id="organization">
+                                <label class="control-label visible-ie8 visible-ie9">Organization</label>
+                                <select id="organizationId" name="organizationId" class="form-control select2-ajax" style="width: 100%;" data-select2-source="organization" data-select2-value="{{ old('organizationId',$model->organizationId) }}">
+                                </select>
+                                <span class="help-block help-block-error">Organization</span>
+                                <div class="form-control-focus"> </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="user_email">Email</label>
-                                <input type="email" id="user_email"
-                                class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                value="{{ (old('email'))? old('email'): $model->email}}"
-                                placeholder="Email"
-                                name="email">
-                                @if ($errors->has('email'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="customer_password">Password</label>
-                                <input type="text" id="customer_password"
-                                class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                value="{{ (old('password'))? old('password'): $model->password }}"
-                                placeholder="Password"
-                                name="password" autofocus>
-
-                                @if ($errors->has('password'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="user_contactNumber">Contact Number</label>
-                                <input type="text" step="0.01" id="user_contactNumber"
-                                class="form-control{{ $errors->has('contactNumber') ? ' is-invalid' : '' }}"
-                                value="{{ (old('contactNumber'))? old('contactNumber'): $model->contactNumber }}"
-                                placeholder="Contact Number"
-                                name="contactNumber" autofocus>
-                                @if ($errors->has('contactNumber'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('contactNumber') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="users_alphaRole">Alpha Role</label>
-                            <select id="users_alphaRole" name="alphaRole"
-                            class="form-control{{ $errors->has('alphaRole') ? ' is-invalid' : '' }} select2" style="width: 100%">
-                            <option value="">Select</option>
-                            @foreach(['SUPER', 'USERS'] as  $title)
-                            <option value="{{$title}}" {{ (old('alphaRole') == $title) ? 'selected=""':'' }} {{ ($model->alphaRole == $title) ? 'selected=""':''}} >
-                            {{ str_replace('_',' ',$title) }}</option>
-                            @endForeach
-                        </select>
-
-
-                        @if ($errors->has('alphaRole'))
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('alphaRole') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-
-                    <div class="form-group col-md-4 req-by-user">
-                        <label for="role_id">Roles</label>
-                        <select id="role_id" name="role_id[]" class="form-control{{ $errors->has('role_id') ? ' is-invalid' : '' }} select2" multiple="" style="width: 100%;">
-                            @foreach($roles as  $key => $title)
-                            <option value="{{$key}}" {{ (old('role_id') == null) ? '' : (in_array($key, old('role_id')) ? "selected" : "") }} {{in_array($key,$assigned_role_array) ? "selected" : "" }}>{{ $title }}</option>
-                            @endForeach
-                        </select>
-                        @if ($errors->has('role_id'))
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('role_id') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-
-                <div class="col-md-4 req-by-user">
-                    <div class="form-group">
-                        <label for="active">Status</label>
-                        <select id="active" name="active" class="form-control select2" style="width: 100%">
-                            @foreach([1=>'Active', 0=>'Inactive'] as  $key=>$value)
-                            <option value="{{$key}}"  {{ ($model->active == $key && !($model->active == "")) ? 'selected':''}} >
-                                {{ $value }}
-                            </option>
-                            @endForeach
-                        </select>
                     </div>
                 </div>
-
+                <div class="form-actions">
+                    <button type="submit" class="pbut btn green uppercase btn-outline">{{$model->exists ? "Update" :"Create"}} User</button>
+                </div>
+            </form>
         </div>
     </div>
-
-    <div class="card-footer">
-        <a href="{{ route('users.index') }}"
-        class="btn btn-raised btn-warning mr-1">
-        <i class="fas fa-arrow-left"></i> Back
-    </a>
-    @if(!isset($model->id))
-    <button type="submit" class="btn btn-raised btn-primary disableOnSubmit" id="save-btn" name="save_btn" value="{{ config('constants.SAVE') }}">
-        <i class="fa fa-save"></i> Save
-    </button>
-    <button type="submit" class="btn btn-raised btn-primary disableOnSubmit" id="save-add-more-btn" name="save_btn" value="{{ config('constants.SAVE_ADD_MORE') }}">
-        <i class="fa fa-save"></i> Save & Add More
-    </button>
-    @else
-    <button type="submit" class="btn btn-raised btn-primary disableOnSubmit" id="save-btn" name="save_btn" value="{{ config('constants.UPDATE') }}">
-        <i class="fa fa-save"></i> Save
-    </button>
-    @endif
-</div>
-
-</form>
-</div>
-</div>
-
-</div>
-</div>
 @endsection
 @section('css')
+    <style>
+        .select2-container--default .select2-selection--single{
+            background-color: transparent;
+            border: 0;
+            border-bottom: 1px solid #aaa;
+        }
+    </style>
 @stop
 @section('plugins.Select2', true)
 @section('js')
 <script>
 
+    $('document').ready(function () {
+        $("#role_id").change(function () {
+            var data = $('#role_id').find(":selected").text();
+            $('#organization').hide();
 
+            if(data)
+            {
+                if (data.includes("Organization")) {
+                    $('#organization').show();
+                }
+            }
+
+        });
+
+        $(window).on('load', function() {
+            var data = $('#role_id').find(":selected").text();
+            $('#organization').hide();
+
+            if(data)
+            {
+                if (data.includes("Organization")) {
+                    $('#organization').show();
+                }
+            }
+        });
+    });
     $('#users_alphaRole').change(function(){
         if($(this).val() == "SUPER"){
             $('.req-by-user').addClass('hidden');
@@ -192,7 +165,7 @@
 
     function emptyUserField(){
         $('#role_id').val('').trigger('change');
-        $('#customerId').val('').trigger('change');
+        $('#organizationId').val('').trigger('change');
     }
 </script>
 @stop

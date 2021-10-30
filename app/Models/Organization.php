@@ -66,7 +66,7 @@ class Organization extends BaseModel implements HasMedia
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'userId', 'id');
+        return $this->hasMany(Admin::class, 'organizationId', 'id');
     }
 
     public function salesLead(){

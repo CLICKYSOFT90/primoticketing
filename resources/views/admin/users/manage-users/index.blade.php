@@ -1,80 +1,77 @@
 @extends('adminlte::page')
 @section('title', 'Users')
 @section('content_header')
-<div class="row">
-  <div class="col-md-6">
-    <h1>@yield('title')</h1>
-  </div>
-  @if(\Common::canCreate($module))
-  <div class="col-md-6">
-    <div class="float-right">
-      <a href="{{ route('users.create') }}" class="btn btn-raised btn-primary round btn-min-width mr-1 mb-1">Add
-      New</a>
-    </div>
-  </div>
-  @endif
-</div>
 @stop
 
 @section('content')
-<div class="container-fluid">
-  <section id="multi-column">
-    <div class="row">
-      <div class="col-12">
-        <div class="card card-primary card-outline">
-          <div class="card-body collapse show">
-            <div class="card-block table-responsive">
-              <table class="table table-bordered table-striped table-hover datatable" width="100%">
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-green">
+                <i class="icon-user font-green"></i>
+                <span class="caption-subject bold uppercase">@yield('title')</span>
+            </div>
+            <div class="actions">
+                <div class="btn-group btn-group-devided">
+                    @if(\Common::canCreate($module))
+                        <a href="{{  route('users.create') }}" class="btn green btn-outline">
+                            Create User <i class="fa fa-plus"></i>
+                        </a>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <table class="table table-striped table-bordered table-hover dt-responsive dataTable no-footer dtr-inline collapsed"
+                   id="userTable" role="grid" aria-describedby="userTable_info" style="width: 1186px;">
                 <thead>
-                  <tr>
+                <tr>
                     <th>Id</th>
                     <th>Full Name</th>
                     <th>Username</th>
                     <th>Email</th>
-                    <th>Created</th>
-                    @if(\Common::userRole() == "SUPER")
-                    <th>Last Login</th>
-                    @endif
-                    <th>Active</th>
+                    <th>Organization</th>
+                    <th>Status</th>
                     <th>Action</th>
-                  </tr>
+                    <th>Created</th>
+
+
+                </tr>
                 </thead>
-              </table>
-            </div>
-          </div>
+            </table>
+            <!-- /.table-responsive -->
         </div>
-      </div>
+        <!-- /.portlet -->
     </div>
-  </section>
-</div>
 @stop
 
 @section('css')
 @stop
 
 @section('js')
-<script>
-  $(function() {
-    $('.datatable').DataTable({
-      serverSide: true,
-      iDisplayLength: 100,
-      aaSorting: [ [0, "desc"] ],
-      ajax: "{{ route('users.index') }}",
-      columns: [
-      { data: 'id'},
-      { data: 'name'},
-      { data: 'username'},
-      { data: 'email'},
-      { data: 'created_at'},
-      @if(\Common::userRole() == "SUPER")
-        { data: 'last_login_at'},
-      @endif
-      { data: 'active'},
-      { data: 'action', searchable: false, sortable: false},
-      ]
-    });
-  });
-</script>
+    <script>
+        $(function () {
+            $('.dataTable').DataTable({
+                serverSide: true,
+                iDisplayLength: 100,
+                aaSorting: [[0, "desc"]],
+                ajax: "{{ route('users.index') }}",
+                columns: [
+                    {data: 'id'},
+                    {data: 'name'},
+                    {data: 'username'},
+                    {data: 'email'},
+                    {data: 'organization_name',name:'organization.organization_name'},
+                    {data: 'active'},
+                    {
+                        data: 'action', searchable: false, sortable: false
+                    },
+                    {data: 'created_at'},
+
+
+                ]
+            });
+        });
+    </script>
 @stop
 
 @section('plugins.Datatables', true)

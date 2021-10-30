@@ -242,6 +242,23 @@ return [
             'rbac' => true,
             'icon' => 'far fa-calendar-alt'
         ],
+        [
+            'text' => 'Users',
+            'url'  => 'admin/users',
+            'module' => 'User',
+            'permission-slug' => 'read',
+            'rbac' => true,
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'Roles',
+            'url'  => 'admin/roles',
+            'module' => 'Role',
+            'permission-slug' => 'read',
+            'rbac' => true,
+            'icon' => 'fas fa-user-tag',
+            'style' => 'font-weight:900',
+        ],
         /*[
             'text' => 'Global Settings',
             'url'  => 'admin/accountGroups',

@@ -51,10 +51,20 @@ class ManageUsersController extends Controller
                     ->addColumn('action', function ($data){
                         return Admin::actionButtons($data);
                     })->editColumn('created_at', function ($data){
-                        return $data->created_at;
-                    })->editColumn('last_login_at', function ($data){
-                        return $data->last_login_at;
-                    })->rawColumns(['action'])->make(true);
+                        return \App\Helpers\Common::CTL($data->created_at);
+                    })->editColumn('organization_name', function ($data){
+                        if(!empty($data->organization->organization_name)){
+                            return $data->organization->organization_name;
+                        }else{
+                            return '';
+                        }
+                    })->addColumn('active', function ($data){
+                    if($data->active==1){
+                        return '<span class="label label-success">Active</span>';
+                    }else{
+                        return '<span class="label label-danger">InActive</span>';
+                    }
+                })->rawColumns(['action','active'])->make(true);
         }
         return view($this->mainViewFolder . 'index');
     }
@@ -69,20 +79,17 @@ class ManageUsersController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate(Admin::validationRules());
-        $username = str_replace(" ","_",strtolower($request['name']));
-        $username = str_replace("-","_",strtolower($username));
-        $username = preg_replace('/[^A-Za-z0-9\_]/', '', $username);
-        $request->merge(['username' => $username]);
+        $validatedData = $request->validate(Admin::validationRules(0),[],['active'=>'Status']);
+        $request->merge(['timezone'=>'US/Central']);
+
         $this->_user = new Admin($request->all());
 
         $role = $request->get('role_id');
 
-
         if (!$this->_user->save())
             throw new \Exception($this->setAlertError('User'));
 
-        if(!empty($role)){
+        if($request->alphaRole=="USERS" && !empty($role)){
         // assign Role to user
             $this->addRoles(array_diff($request->get('role_id'), $this->_user->roleIds));
         }
