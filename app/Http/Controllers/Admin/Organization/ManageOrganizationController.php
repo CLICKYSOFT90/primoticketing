@@ -20,7 +20,7 @@ class ManageOrganizationController extends BaseController
 {
     use AlertMessages, ResponseWithHttpStatus;
 
-    public $module = "Organization";
+    public $module = "Organizations";
 
     public $permissions = Array(
         "index" => "read",

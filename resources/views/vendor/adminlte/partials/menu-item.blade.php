@@ -65,8 +65,8 @@ $user = \Illuminate\Support\Facades\Auth::user();
                         <a class="nav-link {{ $item['class'] }} @if(isset($item['shift'])) {{ $item['shift'] }} @endif" href="{{ $item['href'] }}"
                            @if (isset($item['target'])) target="{{ $item['target'] }}" @endif
                         >
-                            <i class="{{ $item['icon'] ?? 'far fa-fw fa-circle' }} {{ isset($item['icon_color']) ? 'text-' . $item['icon_color'] : '' }}"></i>
-                            <p>
+                            <i {{ isset($item['style']) ? 'style=' . $item['style'] : '' }} class="{{ $item['icon'] ?? 'far fa-fw fa-circle' }} {{ isset($item['icon_color']) ? 'text-' . $item['icon_color'] : '' }}"></i>
+                            <span class="tile">
                                 {{ $item['text'] }}
                                 @if (isset($item['submenu']))
                                     <i class="fas fa-angle-left right"></i>
@@ -74,7 +74,7 @@ $user = \Illuminate\Support\Facades\Auth::user();
                                 @if (isset($item['label']))
                                     <span class="badge badge-{{ $item['label_color'] ?? 'primary' }} right">{{ $item['label'] }}</span>
                                 @endif
-                            </p>
+                            </span>
                         </a>
                         @if (isset($item['submenu']))
                         <ul class="nav nav-treeview">

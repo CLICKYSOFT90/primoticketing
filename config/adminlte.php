@@ -214,17 +214,19 @@ return [
         [
             'text' => 'Dashboard',
             'url'  => 'admin/dashboard',
-            'module' => 'Dashboard',
-            'rbac' => false,
-            'icon' => 'icon-bar-chart'
+            'module' => 'Menu',
+            'rbac' => true,
+            'icon' => 'icon-bar-chart',
+            'permission-slug' => 'admin/dashboard',
         ],
         [
             'text' => 'Organizations',
             'url'  => 'admin/organization',
-            'module' => 'Organizations',
+            'module' => 'Menu',
             'permission-slug' => 'read',
             'rbac' => true,
-            'icon' => 'icon-users'
+            'icon' => 'icon-users',
+            'permission-slug' => 'admin/organization',
         ],
         [
             'text' => 'Reporting',
@@ -245,19 +247,21 @@ return [
         [
             'text' => 'Users',
             'url'  => 'admin/users',
-            'module' => 'User',
+            'module' => 'Menu',
             'permission-slug' => 'read',
             'rbac' => true,
             'icon' => 'fas fa-fw fa-user',
+            'permission-slug' => 'admin/users',
         ],
         [
             'text' => 'Roles',
             'url'  => 'admin/roles',
-            'module' => 'Role',
+            'module' => 'Menu',
             'permission-slug' => 'read',
             'rbac' => true,
             'icon' => 'fas fa-user-tag',
             'style' => 'font-weight:900',
+            'permission-slug' => 'admin/roles',
         ],
         /*[
             'text' => 'Global Settings',

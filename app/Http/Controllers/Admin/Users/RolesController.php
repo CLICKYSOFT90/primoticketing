@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Admin\Users;
 
+use App\Helpers\Common;
+use App\Models\UserRole;
 use App\TraitLibraries\AlertMessages;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Yajra\Datatables\Datatables;
 use App\Models\Role;
 use App\TraitLibraries\ResponseWithHttpStatus;
@@ -66,9 +69,9 @@ class RolesController extends Controller
                 ->addColumn('action', function ($data) {
                     return Role::actionButtons($data);
                 })->editColumn('created_at', function ($data) {
-                    return $data->created_at;
+                    return Common::CTL($data->created_at);
                 })->editColumn('updated_at', function ($data) {
-                    return $data->updated_at;
+                    return Common::CTL($data->updated_at);
                 })->rawColumns(['action'])->make(true);
         }
         return view($this->mainViewFolder . 'index');
@@ -98,6 +101,7 @@ class RolesController extends Controller
     {
         $rules = $this->_role->rule;
         $rules['roleName'] = ['required', 'unique:roles,roleName'];
+        $rules['roleType'] = ['required',Rule::in(['Organization','Other'])];
         $this->validate($request, $rules);
 
         try {
@@ -229,6 +233,10 @@ class RolesController extends Controller
     {
         try {
             $model = $this->_role->findOrFail($id);
+            if(UserRole::where('role_id',$id)->count() > 0){
+                $request->session()->flash('error', "You can not delete this record. The role is attached to user profile.");
+                return back();
+            }
             if ($model->delete()) {
                 $alertMessage = $this->setAlertSuccess('Role', 'update', $model->id);
                 if (\Common::isAPIRequest()) {
