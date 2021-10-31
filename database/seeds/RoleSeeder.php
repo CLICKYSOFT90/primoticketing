@@ -16,7 +16,8 @@ class RoleSeeder extends Seeder
         if (empty(App\Models\Role::where('roleName', 'Organization')->get()->first())) {
             DB::table('roles')->updateOrInsert([
                 'roleName' => 'Organization',
-                'permissions' => '[]',
+                'roleType' => 'Organization',
+                'permissions' => '["dashboardread","menuadmin\/dashboard"]',
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s"),
             ]);

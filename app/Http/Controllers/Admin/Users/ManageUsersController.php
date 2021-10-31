@@ -72,7 +72,7 @@ class ManageUsersController extends Controller
     public function create()
     {
         $model = new Admin();
-        $roles = Role::all()->pluck('roleName', 'id');
+        $roles = Role::all();
         $assigned_role_array = [];
         return view($this->mainViewFolder . 'form', compact('model','roles', 'assigned_role_array'));
     }
@@ -115,7 +115,7 @@ class ManageUsersController extends Controller
     {
         $model = Admin::find($id);
         if(!empty($model)){
-            $roles = Role::all()->pluck('roleName', 'id');
+            $roles = Role::all();
             $assigned_role_array = [];
             foreach ($model->roles as $assigned_role){
                 $assigned_role_array[] =  $assigned_role->id;
@@ -138,7 +138,7 @@ class ManageUsersController extends Controller
     {
         $model = Admin::find($id);
         $model->password = null;
-        $roles = Role::all()->pluck('roleName', 'id');
+        $roles = Role::all();
         $assigned_role_array = [];
         foreach ($model->roles as $assigned_role){
             $assigned_role_array[] =  $assigned_role->id;

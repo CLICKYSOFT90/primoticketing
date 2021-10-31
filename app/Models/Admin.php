@@ -70,14 +70,23 @@ class Admin extends Authenticatable
         $rules['alphaRole'] = ['required'];
         $rules['role_id'] = [function($attr,$value,$fail) use ($id){
             if(request()->input('alphaRole')=="USERS"){
+
+                $roleSelected = "";
                 foreach (request()->input('role_id') as $role){
                     if($role=="" || $role==0){
                         $fail("Please select role");
                         break;
+                    }else{
+                        $roleSelected = Role::find($value);
+                        if(empty($roleSelected)){
+                            $fail("Invalid role selected");
+                            break;
+                        }
                     }
                 }
-                $organizationRole = Role::where('roleName','Organization')->first();
-                if(!empty($organizationRole) && in_array($organizationRole->id,request()->input('role_id'))){
+                $roleType = $roleSelected[0]->roleType;
+
+                if($roleType=="Organization"){
                     if(empty(request()->organizationId)){
                         $fail("Organization field is required");
                     }
@@ -86,6 +95,10 @@ class Admin extends Authenticatable
                         $fail("Invalid organization selected.");
                     }
 
+                }else{
+                    if(!empty(request()->organizationId)){
+                        $fail("You can not select organization for the selected role.");
+                    }
                 }
             }
 

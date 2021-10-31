@@ -83,8 +83,8 @@
                                 <label class="control-label visible-ie8 visible-ie9">Role</label>
                                 <select id="role_id" name="role_id[]" class="form-control{{ $errors->has('role_id') ? ' is-invalid' : '' }} select2"  style="width: 100%;">
                                     <option value="">Select Role</option>
-                                    @foreach($roles as  $key => $title)
-                                        <option value="{{$key}}" {{ (old('role_id') == null) ? '' : (in_array($key, old('role_id')) ? "selected" : "") }} {{in_array($key,$assigned_role_array) ? "selected" : "" }}>{{ $title }}</option>
+                                    @foreach($roles as  $role)
+                                        <option data-role-type="{{$role->roleType}}" value="{{$role->id}}" {{ (old('role_id') == null) ? '' : (in_array($role->id, old('role_id')) ? "selected" : "") }} {{in_array($role->id,$assigned_role_array) ? "selected" : "" }}>{{ $role->roleName." - ".$role->roleType }}</option>
                                     @endForeach
                                 </select>
                                 <span class="help-block help-block-error">Role</span>
@@ -123,25 +123,25 @@
 
     $('document').ready(function () {
         $("#role_id").change(function () {
-            var data = $('#role_id').find(":selected").text();
-            $('#organization').hide();
-
-            if(data)
+            var option = $('option:selected', this).attr('data-role-type');
+            if(option)
             {
-                if (data.includes("Organization")) {
+                if (option=="Organization") {
                     $('#organization').show();
+                }else{
+                    $('#organization').hide();
                 }
             }
 
         });
 
         $(window).on('load', function() {
-            var data = $('#role_id').find(":selected").text();
+            var option = $('#role_id').find(":selected").attr('data-role-type');
             $('#organization').hide();
 
-            if(data)
+            if(option)
             {
-                if (data.includes("Organization")) {
+                if (option=="Organization") {
                     $('#organization').show();
                 }
             }
