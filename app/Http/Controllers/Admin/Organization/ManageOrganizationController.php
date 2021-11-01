@@ -103,6 +103,10 @@ class ManageOrganizationController extends BaseController
     public function store(Request $request)
     {
         $request->validate(Organization::validationRules(@$request->id));
+        $unique_name = str_replace(" ","",strtolower($request->organization_icon));
+        $unique_name = str_replace("-","_",strtolower($unique_name));
+        $unique_name = preg_replace('/[^A-Za-z0-9\_]/', '', $unique_name);
+        $request->merge(['organization_unique_url' => $unique_name]);
 
         $model = new Organization($request->all());
         $action = "create";

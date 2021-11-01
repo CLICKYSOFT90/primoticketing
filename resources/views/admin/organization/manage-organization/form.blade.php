@@ -77,12 +77,6 @@
                         <div class="form-control-focus"> </div>
                     </div>
                     <div class="form-group form-md-line-input">
-                        <label class="control-label visible-ie8 visible-ie9">Unique URL</label>
-                        <input class="form-control" type="text" placeholder="Unique URL" name="organization_unique_url" value="{{ old('organization_unique_url',$model->organization_unique_url)}}">
-                        <span class="help-block help-block-error">Organization Unique URL</span>
-                        <div class="form-control-focus"> </div>
-                    </div>
-                    <div class="form-group form-md-line-input">
                         <label class="control-label visible-ie8 visible-ie9">Status</label>
                         <select class="form-control" name="status">
                             <option value="">Select Status</option>

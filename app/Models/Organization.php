@@ -59,7 +59,7 @@ class Organization extends BaseModel implements HasMedia
         $rules['organization_contact_phone_number'] = ['required','numeric'];
         $rules['organization_name'] = ['required'];
         $rules['email'] = ['required','email','unique:organizations,email,'.$id];
-        $rules['organization_unique_url'] = ['required','regex:/^\S*$/u','unique:organizations,organization_unique_url,'.$id];
+        $rules['organization_icon'] = ['required','regex:/^[\pL\s]+$/u','unique:organizations,organization_icon,'.$id];
         $rules['active'] = [Rule::in(["1","0"])];
         return $rules;
     }
