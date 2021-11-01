@@ -59,6 +59,7 @@ Route::middleware(['auth:admin', 'permissions'])->namespace('Admin')->prefix('ad
     Route::resource('menu', 'Menu\ManageMenuController');
     Route::resource('notification', 'Notification\ManageNotificationController');
     Route::resource('organization', 'Organization\ManageOrganizationController');
+    Route::resource('globalSetting', 'GlobalSetting\ManageGlobalSettingController');
 
     /*Change Password*/
     Route::get('changePassword', 'Users\ChangePasswordController@index')->middleware('auth')->name('change-password');

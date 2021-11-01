@@ -33,7 +33,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    //protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = "/admin";
 
     /**
      * Create a new controller instance.
@@ -48,7 +49,8 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         $user = \auth('admin')->user();
-        $role = $user->role;
+        $role = $user->alphaRole;
+
         if ($role != UserManager::AlphaRoleSuper) {
             $this->setMergeRolePermissions($user->roles);
 

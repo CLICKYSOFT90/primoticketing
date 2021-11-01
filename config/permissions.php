@@ -8,6 +8,11 @@ return array(
     array("module" => "Organizations", "key" => "update", "name" => "Edit Organization","show"=>1,"organization"=>0,"other"=>1),
     array("module" => "Organizations", "key" => "delete", "name" => "Delete Organization","show"=>1,"organization"=>0,"other"=>1),
 
+    array("module" => "GlobalSettings", "key" => "create", "name" => "Add Global Settings","show"=>1,"organization"=>1,"other"=>0),
+    array("module" => "GlobalSettings", "key" => "read", "name" => "View Global Settings","show"=>1,"organization"=>1,"other"=>0),
+    array("module" => "GlobalSettings", "key" => "update", "name" => "Edit Global Settings","show"=>1,"organization"=>1,"other"=>0),
+    array("module" => "GlobalSettings", "key" => "delete", "name" => "Delete Global Settings","show"=>1,"organization"=>1,"other"=>0),
+
     array("module" => "User", "key" => "create", "name" => "Add Users","show"=>1,"organization"=>0,"other"=>1),
     array("module" => "User", "key" => "read", "name" => "View Users","show"=>1,"organization"=>0,"other"=>1),
     array("module" => "User", "key" => "update", "name" => "Edit Users","show"=>1,"organization"=>0,"other"=>1),
@@ -39,6 +44,7 @@ return array(
     /*MASTER MENUS*/
     array("module" => "Menu", "key" => "admin/dashboard", "name" => "Show Dashboard Menu","show"=>1,"organization"=>1,"other"=>1),
     array("module" => "Menu", "key" => "admin/organization", "name" => "Show Organization Menu","show"=>1,"organization"=>0,"other"=>1),
+    array("module" => "Menu", "key" => "admin/globalSetting", "name" => "Show Global Setting Menu","show"=>1,"organization"=>1,"other"=>0),
     array("module" => "Menu", "key" => "admin/users", "name" => "Show Users Menu","show"=>1,"organization"=>0,"other"=>1),
     array("module" => "Menu", "key" => "admin/roles", "name" => "Show Roles Menu","show"=>1,"organization"=>0,"other"=>1),
     /*MASTER MENUS*/

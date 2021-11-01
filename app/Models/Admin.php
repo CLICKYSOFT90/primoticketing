@@ -8,6 +8,7 @@ use App\Notifications\ResetPassword;
 use App\TraitLibraries\ModelHelper;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Laravel\Passport\HasApiTokens;
@@ -260,5 +261,9 @@ class Admin extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
+    }
+    public static function loggedUserData(){
+        $authUser = Auth::guard('admin')->user();
+        return $authUser->toArray();
     }
 }

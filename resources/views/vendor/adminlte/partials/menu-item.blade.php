@@ -36,6 +36,9 @@ $user = \Illuminate\Support\Facades\Auth::user();
 
                 if(@$user->alphaRole == UserManager::AlphaRoleSuper && (session()->get($name) == "true" && $bypass == true))
                 {
+                    if($item['other']==1){
+
+
                 ?>
                     <a class="nav-link {{ $item['class'] }} @if(isset($item['shift'])) {{ $item['shift'] }} @endif" href="{{ $item['href'] }}"
                        @if (isset($item['target'])) target="{{ $item['target'] }}" @endif
@@ -57,6 +60,7 @@ $user = \Illuminate\Support\Facades\Auth::user();
                         </ul>
                     @endif
                 <?php
+                    }
                 }
                 elseif(@$user->alphaRole == UserManager::AlphaRoleUser && (session()->get($name) == "true" && $bypass == true))
                 {

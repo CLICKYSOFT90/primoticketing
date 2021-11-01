@@ -218,6 +218,8 @@ return [
             'rbac' => true,
             'icon' => 'icon-bar-chart',
             'permission-slug' => 'admin/dashboard',
+            "organization"=>0,
+            "other"=>1
         ],
         [
             'text' => 'Organizations',
@@ -227,6 +229,8 @@ return [
             'rbac' => true,
             'icon' => 'icon-users',
             'permission-slug' => 'admin/organization',
+            "organization"=>0,
+            "other"=>1
         ],
         [
             'text' => 'Reporting',
@@ -234,7 +238,9 @@ return [
             'module' => 'AccountGroup',
             'permission-slug' => 'read',
             'rbac' => true,
-            'icon' => 'far fa-chart-bar'
+            'icon' => 'far fa-chart-bar',
+            "organization"=>0,
+            "other"=>1
         ],
         [
             'text' => 'Event List',
@@ -242,7 +248,21 @@ return [
             'module' => 'AccountGroup',
             'permission-slug' => 'read',
             'rbac' => true,
-            'icon' => 'far fa-calendar-alt'
+            'icon' => 'far fa-calendar-alt',
+            "organization"=>0,
+            "other"=>1
+        ],
+        [
+            'text' => 'Global Settings',
+            'url'  => 'admin/globalSetting',
+            'module' => 'Menu',
+            'permission-slug' => 'read',
+            'rbac' => true,
+            'icon' => 'far fa-sliders-h',
+            'style' => 'font-weight:900',
+            'permission-slug' => 'admin/globalSetting',
+            "organization"=>1,
+            "other"=>0
         ],
         [
             'text' => 'Users',
@@ -252,6 +272,8 @@ return [
             'rbac' => true,
             'icon' => 'fas fa-fw fa-user',
             'permission-slug' => 'admin/users',
+            "organization"=>0,
+            "other"=>1
         ],
         [
             'text' => 'Roles',
@@ -262,6 +284,8 @@ return [
             'icon' => 'fas fa-user-tag',
             'style' => 'font-weight:900',
             'permission-slug' => 'admin/roles',
+            "organization"=>0,
+            "other"=>1
         ],
         /*[
             'text' => 'Global Settings',

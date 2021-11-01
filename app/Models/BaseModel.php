@@ -21,23 +21,23 @@ class BaseModel extends Model
         parent::boot();
         static::creating(function($model)
         {
-            if(\Auth::check()){
-                $user = \Auth::user();
+            if(\Auth::guard('admin')->check()){
+                $user = \Auth::guard('admin')->user();
                 $model->created_by = $user->username;
             }
         });
         static::updating(function($model)
         {
-            if(\Auth::check()) {
-                $user = \Auth::user();
+            if(\Auth::guard('admin')->check()) {
+                $user = \Auth::guard('admin')->user();
                 $model->updated_by = $user->username;
             }
         });
         static::deleting(function($model)
         {
-            if(\Auth::check()) {
+            if(\Auth::guard('admin')->check()) {
                 $model->deleteCustomFields($model);
-                $user = \Auth::user();
+                $user = \Auth::guard('admin')->user();
                 $model->deleted_by = $user->username;
                 if ($model->active) {
                     $model->active = 0;
@@ -45,5 +45,10 @@ class BaseModel extends Model
                 $model->save();
             }
         });
+        if(Admin::loggedUserData()['organization_id'] > 0){
+            static::addGlobalScope('organizationFilter', function (Builder $builder) {
+                $builder->where('organization_id','=',Admin::loggedUserData()['organization_id']);
+            });
+        }
     }
 }
