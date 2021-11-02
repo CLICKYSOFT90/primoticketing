@@ -14,7 +14,7 @@ class TicketType extends BaseModel
     public static function boot(){
         parent::boot();
         static::addGlobalScope('organizationScope', function (Builder $builder) {
-            $builder->where('organization_id', '=', Admin::loggedUserData()['organization_id']);
+            $builder->where('organization_id', '=', Admin::loggedUserData()['organizationId']);
         });
     }
 
@@ -29,18 +29,27 @@ class TicketType extends BaseModel
         'active'
     ];
 
-
-    public static function validationRules($id = 0){
-        $rules['name'] = ['required',function($attr,$value,$fail) use ($id){
-              $nameCheck = self::where('id','!=',$id)->where('name','=',$value)->count();
-              if($nameCheck > 0){
-                  $fail("Ticket name already exists.");
-              }
-        }];
-        $rules['type'] = ['required'];
-        $rules['event_type_id'] = ['required','exists:event_types,id'];
-        $rules['default_price'] = ['required','numeric'];
-        $rules['default_limit'] = ['required','numeric'];
+    public static function validationRules(){
+        $rules['TTRow.*.name'] = ['required','distinct'];
+        $rules['TTRow.*.type'] = ['required'];
+        $rules['TTRow.*.event_type_id'] = ['required'];
+        $rules['TTRow.*.default_price'] = ['required','numeric'];
+        $rules['TTRow.*.default_limit'] = ['required','numeric'];
         return $rules;
+    }
+
+    public static function validationMsgs(){
+        $msgs = [];
+        foreach(request()->input('TTRow') as $key => $value) {
+            $msgs['TTRow.'.$key.'.name.required'] = 'Ticket type name is required on row #'.$key.".";
+            $msgs['TTRow.'.$key.'.name.distinct'] = 'Ticket type name is duplicate on row #'.$key.".";
+            $msgs['TTRow.'.$key.'.type.required'] = 'Ticket type name is required on row #'.$key.".";
+            $msgs['TTRow.'.$key.'.event_type_id.required'] = 'Ticket Event Type is required on row #'.$key.".";
+            $msgs['TTRow.'.$key.'.default_price.required'] = 'Default price is required on row #'.$key.".";
+            $msgs['TTRow.'.$key.'.default_price.numeric'] = 'Only numeric data is allowed in default price field on row #'.$key.".";
+            $msgs['TTRow.'.$key.'.default_limit.required'] = 'Default limit is required on row #'.$key.".";
+            $msgs['TTRow.'.$key.'.default_limit.numeric'] = 'Only numeric data is allowed in default limit field on row #'.$key.".";
+        }
+        return $msgs;
     }
 }

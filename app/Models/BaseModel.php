@@ -45,10 +45,5 @@ class BaseModel extends Model
                 $model->save();
             }
         });
-        if(Admin::loggedUserData()['organization_id'] > 0){
-            static::addGlobalScope('organizationFilter', function (Builder $builder) {
-                $builder->where('organization_id','=',Admin::loggedUserData()['organization_id']);
-            });
-        }
     }
 }

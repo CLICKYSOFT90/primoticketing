@@ -5,10 +5,15 @@ namespace App\Http\Controllers\Admin\GlobalSetting;
 use App\Models\AccountGroup;
 use App\Models\AccountType;
 use App\Models\Address;
+use App\Models\Admin;
+use App\Models\EventType;
 use App\Models\Organization;
 use App\Models\Service;
+use App\Models\SpecialWalkUpType;
+use App\Models\TicketType;
 use App\TraitLibraries\AlertMessages;
 use App\TraitLibraries\ResponseWithHttpStatus;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
 use Illuminate\Support\Facades\DB;
@@ -34,9 +39,11 @@ class ManageGlobalSettingController extends BaseController
 
     public function index(Request $request)
     {
+        $eventType = EventType::get();
+        $ticketType = TicketType::get();
+        $walkUpType = SpecialWalkUpType::get();
 
-
-        return view($this->mainViewFolder . 'index');
+        return view($this->mainViewFolder . 'index',compact('eventType','ticketType','walkUpType'));
     }
 
     public function create()
@@ -90,36 +97,139 @@ class ManageGlobalSettingController extends BaseController
 
     public function store(Request $request)
     {
-        $request->validate(Organization::validationRules(@$request->id));
-        $unique_name = str_replace(" ","",strtolower($request->organization_icon));
-        $unique_name = str_replace("-","_",strtolower($unique_name));
-        $unique_name = preg_replace('/[^A-Za-z0-9\_]/', '', $unique_name);
-        $request->merge(['organization_unique_url' => $unique_name]);
+        if(!empty($request->event_type) && $request->event_type == 1){
 
-        $model = new Organization($request->all());
-        $action = "create";
-        $redirect = 'organization.index';
+            $request->validate(EventType::validationRules(), EventType::validationMsgs());
+            DB::beginTransaction();
+            try {
+                $organizationId = Admin::loggedUserData()['organizationId'];
+                foreach ($request->ETRow as $sr => $row) {
+                    if (@$row['delete'] == 1) {
+                        if(TicketType::where('event_type_id',$row['id'])->count() > 0){
+                            $eventType = EventType::find($row['id']);
+                            DB::rollBack();
+                            return new JsonResponse(['errors'=>['event_type'=>['No record updated. Event type '.$eventType->name.' can not be deleted, It is using in ticket type. Please refresh the page and try again.']]], 422);
+                        }
+                        EventType::destroy($row['id']);
+                    } else {
+                        $row['organization_id'] = $organizationId;
+                        $model = new EventType($row);
 
-        if(!empty(@$request->input('id'))){
-            $model = Organization::find($request->input('id'));
-            $model->loadModel($request->all());
-            $action = "update";
-            $redirect = 'organization.index';
+                        if (!empty(@$row['id'])) {
+                            $model = EventType::find($row['id']);
+                            $model->loadModel($row);
+                        }
+
+                        if (!$model->save()) {
+                            return new JsonResponse(['errors'=>['saving_date'=>['Error in save data. Please refresh the page and try again.']]], 422);
+                        }
+                    }
+                }
+                DB::commit();
+                $request->session()->flash('success','Event type data updated successfully.');
+                if($request->wantsJson()){
+                    return new JsonResponse(['status'=>'success','action'=>'redirect','url'=>'/admin/globalSetting'],200);
+                }else{
+                    return redirect()->route("globalSetting.index");
+                }
+
+
+            }catch (\Exception $ex) {
+                DB::rollBack();
+                if($request->wantsJson()){
+                    return new JsonResponse(['errors'=>['exception'=>[$ex->getMessage()]]], 422);
+                }else{
+                    $request->session()->flash('error', $ex->getMessage());
+                    return redirect()->route("globalSetting.index");
+                }
+
+            }
+        }else if(!empty($request->ticket_type) && $request->ticket_type == 1){
+            $request->validate(TicketType::validationRules(), TicketType::validationMsgs());
+            DB::beginTransaction();
+            try {
+                $organizationId = Admin::loggedUserData()['organizationId'];
+                foreach ($request->TTRow as $sr => $row) {
+                    if (@$row['delete'] == 1) {
+                        TicketType::destroy($row['id']);
+                    } else {
+                        $row['organization_id'] = $organizationId;
+                        $model = new TicketType($row);
+
+                        if (!empty(@$row['id'])) {
+                            $model = TicketType::find($row['id']);
+                            $model->loadModel($row);
+                        }
+
+                        if (!$model->save()) {
+                            return new JsonResponse(['errors'=>['saving_date'=>['Error in save data. Please refresh the page and try again.']]], 422);
+                        }
+                    }
+                }
+                DB::commit();
+                $request->session()->flash('success','Ticket type data updated successfully.');
+                if($request->wantsJson()){
+                    return new JsonResponse(['status'=>'success','action'=>'redirect','url'=>'/admin/globalSetting'],200);
+                }else{
+                    return redirect()->route("globalSetting.index");
+                }
+
+
+            }catch (\Exception $ex) {
+                DB::rollBack();
+                if($request->wantsJson()){
+                    return new JsonResponse(['errors'=>['exception'=>[$ex->getMessage()]]], 422);
+                }else{
+                    $request->session()->flash('error', $ex->getMessage());
+                    return redirect()->route("globalSetting.index");
+                }
+
+            }
+
+        }else if(!empty($request->walkup_type) && $request->walkup_type == 1){
+            $request->validate(SpecialWalkUpType::validationRules(), SpecialWalkUpType::validationMsgs());
+            DB::beginTransaction();
+            try {
+                $organizationId = Admin::loggedUserData()['organizationId'];
+                foreach ($request->WTRow as $sr => $row) {
+                    if (@$row['delete'] == 1) {
+                        SpecialWalkUpType::destroy($row['id']);
+                    } else {
+                        $row['organization_id'] = $organizationId;
+                        $model = new SpecialWalkUpType($row);
+
+                        if (!empty(@$row['id'])) {
+                            $model = SpecialWalkUpType::find($row['id']);
+                            $model->loadModel($row);
+                        }
+
+                        if (!$model->save()) {
+                            return new JsonResponse(['errors'=>['saving_date'=>['Error in save data. Please refresh the page and try again.']]], 422);
+                        }
+                    }
+                }
+                DB::commit();
+                $request->session()->flash('success','SPECIAL WALK-UP TYPES data updated successfully.');
+                if($request->wantsJson()){
+                    return new JsonResponse(['status'=>'success','action'=>'redirect','url'=>'/admin/globalSetting'],200);
+                }else{
+                    return redirect()->route("globalSetting.index");
+                }
+
+
+            }catch (\Exception $ex) {
+                DB::rollBack();
+                if($request->wantsJson()){
+                    return new JsonResponse(['errors'=>['exception'=>[$ex->getMessage()]]], 422);
+                }else{
+                    $request->session()->flash('error', $ex->getMessage());
+                    return redirect()->route("globalSetting.index");
+                }
+
+            }
+
         }
-        DB::beginTransaction();
-        try{
-            if (!$model->save())
-                throw new \Exception($this->setAlertError('Organization', $action));
-
-            $request->session()->flash('success', $this->setAlertSuccess('Organization', $action, $model->id));
-
-            DB::commit();
-        } catch (\Exception $ex) {
-            DB::rollBack();
-            $request->session()->flash('error', $ex->getMessage());
-            return redirect()->route($redirect);
-        }
-        return redirect()->route($redirect);
+        return false;
     }
 
 }

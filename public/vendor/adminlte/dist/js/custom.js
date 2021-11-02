@@ -223,6 +223,8 @@ function cloneDiv(maidDivId, divRowId, divText = "Row"){
 }
 
 function removeRow(id, tableId, rowId, forceRemove = 0) {
+   console.log(tableId);
+   console.log(($('#'+tableId+' tbody tr:visible').length));
     var i = id.split('-')[1];
     if($('#'+rowId+'-' + i).hasClass("disabled")){
         toastr.info("Please enable this row to make any changes. ", "Info");

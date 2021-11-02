@@ -14,7 +14,7 @@ class SpecialWalkUpType extends BaseModel
     public static function boot(){
         parent::boot();
         static::addGlobalScope('organizationScope', function (Builder $builder) {
-            $builder->where('organization_id', '=', Admin::loggedUserData()['organization_id']);
+            $builder->where('organization_id', '=', Admin::loggedUserData()['organizationId']);
         });
     }
 
@@ -26,13 +26,17 @@ class SpecialWalkUpType extends BaseModel
     ];
 
 
-    public static function validationRules($id = 0){
-        $rules['name'] = ['required',function($attr,$value,$fail) use ($id){
-              $nameCheck = self::where('id','!=',$id)->where('name','=',$value)->count();
-              if($nameCheck > 0){
-                  $fail("Walk Up type name already exists.");
-              }
-        }];
+    public static function validationRules(){
+        $rules['WTRow.*.name'] = ['required','distinct'];
         return $rules;
+    }
+
+    public static function validationMsgs(){
+        $msgs = [];
+        foreach(request()->input('WTRow') as $key => $value) {
+            $msgs['WTRow.'.$key.'.name.required'] = 'Walk-up Name is required on row #'.$key.".";
+            $msgs['WTRow.'.$key.'.name.distinct'] = 'Walk-up Name is duplicate on row #'.$key.".";
+        }
+        return $msgs;
     }
 }
