@@ -8,6 +8,11 @@ return array(
     array("module" => "Organizations", "key" => "update", "name" => "Edit Organization","show"=>1,"organization"=>0,"other"=>1),
     array("module" => "Organizations", "key" => "delete", "name" => "Delete Organization","show"=>1,"organization"=>0,"other"=>1),
 
+    array("module" => "EventManager", "key" => "create", "name" => "Add Event Manager","show"=>1,"organization"=>1,"other"=>0),
+    array("module" => "EventManager", "key" => "read", "name" => "View Event Manager","show"=>1,"organization"=>1,"other"=>0),
+    array("module" => "EventManager", "key" => "update", "name" => "Edit Event Manager","show"=>1,"organization"=>1,"other"=>0),
+    array("module" => "EventManager", "key" => "delete", "name" => "Delete Event Manager","show"=>1,"organization"=>1,"other"=>0),
+
     array("module" => "GlobalSettings", "key" => "create", "name" => "Add Global Settings","show"=>1,"organization"=>1,"other"=>0),
     array("module" => "GlobalSettings", "key" => "read", "name" => "View Global Settings","show"=>1,"organization"=>1,"other"=>0),
     array("module" => "GlobalSettings", "key" => "update", "name" => "Edit Global Settings","show"=>1,"organization"=>1,"other"=>0),
@@ -44,6 +49,7 @@ return array(
     /*MASTER MENUS*/
     array("module" => "Menu", "key" => "admin/dashboard", "name" => "Show Dashboard Menu","show"=>1,"organization"=>1,"other"=>1),
     array("module" => "Menu", "key" => "admin/organization", "name" => "Show Organization Menu","show"=>1,"organization"=>0,"other"=>1),
+    array("module" => "Menu", "key" => "admin/eventManager", "name" => "Show Event Manager Menu","show"=>1,"organization"=>1,"other"=>0),
     array("module" => "Menu", "key" => "admin/globalSetting", "name" => "Show Global Setting Menu","show"=>1,"organization"=>1,"other"=>0),
     array("module" => "Menu", "key" => "admin/users", "name" => "Show Users Menu","show"=>1,"organization"=>0,"other"=>1),
     array("module" => "Menu", "key" => "admin/roles", "name" => "Show Roles Menu","show"=>1,"organization"=>0,"other"=>1),

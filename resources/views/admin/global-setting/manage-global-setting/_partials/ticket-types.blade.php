@@ -46,7 +46,7 @@
       </td>
       <td>
         <select name="TTRow[{{$i}}][event_type_id]" id="TTRow-{{$i}}-event_type_id" class="form-control">
-          <option value="" >Please Select</option>
+          <option value="-1" >Any</option>
           @foreach($eventType as $rec)
             <option value="{{$rec->id}}" {{ old('TTRow.'.($i).'.$TT', @$TT[$i-1]['event_type_id']) == $rec->id ? 'selected' : '' }}>
               {{ $rec->name }}

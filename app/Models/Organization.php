@@ -6,9 +6,8 @@ use Illuminate\Validation\Rule;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Organization extends BaseModel implements HasMedia
+class Organization extends BaseModel
 {
-    use InteractsWithMedia;
     public static $module = "Organizations";
 
     protected $fillable = [

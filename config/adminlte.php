@@ -253,6 +253,17 @@ return [
             "other"=>1
         ],
         [
+            'text' => 'Event Manager',
+            'url'  => 'admin/eventManager',
+            'module' => 'Menu',
+            'permission-slug' => 'read',
+            'rbac' => true,
+            'icon' => 'far fa-calendar-alt',
+            'permission-slug' => 'admin/eventManager',
+            "organization"=>1,
+            "other"=>0
+        ],
+        [
             'text' => 'Global Settings',
             'url'  => 'admin/globalSetting',
             'module' => 'Menu',

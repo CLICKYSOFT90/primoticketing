@@ -73,7 +73,7 @@
         integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- END THEME LAYOUT SCRIPTS -->
-
+@yield('js')
 <!-- Custom JS With PHP Involevd -->
 <script type="text/javascript">
 

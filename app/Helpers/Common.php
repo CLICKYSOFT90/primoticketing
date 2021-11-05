@@ -369,6 +369,15 @@ class Common
         }
     }
 
+    public static function CFL($dateTime)
+    {
+        if (empty($dateTime)) {
+            return null;
+        }
+        $carbon = \Timezone::convertFromLocal($dateTime);
+        return $carbon->toDateTimeString();
+    }
+
     public static function CAMPM($time)
     {
         if (!empty(($time))) {
