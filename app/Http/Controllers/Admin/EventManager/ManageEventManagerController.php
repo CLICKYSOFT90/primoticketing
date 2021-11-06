@@ -44,17 +44,35 @@ class ManageEventManagerController extends BaseController
     public function index(Request $request)
     {
         if($request->ajax()){
-            return  Datatables::of(Organization::getList())
+            return  Datatables::of(EventParent::getList())
                 ->addColumn('action', function ($data){
-                    return Organization::actionButtons($data);
-                })
-                ->addColumn('active', function ($data){
-                    if($data->active==1){
-                        return '<span class="label label-success">Active</span>';
-                    }else{
-                        return '<span class="label label-danger">InActive</span>';
-                    }
-                })->rawColumns(['action','active'])->make(true);
+                    return EventParent::actionButtons($data);
+                })->addColumn('nested_events', function ($data){
+                    return number_format($data->childEvent->count());
+                })->addColumn('total_tickets_sold', function ($data){
+                    return 0;
+                })->addColumn('info', function ($data){
+                    return "infos";
+                })->rawColumns(['action','info'])->make(true);
+        }
+
+        return view($this->mainViewFolder . 'index');
+    }
+
+    public function getChildEvent(Request $request)
+    {
+        if($request->ajax()){
+            return  Datatables::of(EventChild::getList())
+                ->addColumn('action', function ($data){
+                    return EventChild::actionButtons($data);
+                })->addColumn('parent_name', function ($data){
+                    return $data->parentEvent->name;
+                })->editColumn('event_start', function ($data){
+                    $date = Common::CTL($data->event_start,true);
+                    return $date;
+                })->addColumn('total_tickets_sold', function ($data){
+                    return 0;
+                })->rawColumns(['action'])->make(true);
         }
 
         return view($this->mainViewFolder . 'index');
@@ -131,22 +149,20 @@ class ManageEventManagerController extends BaseController
         try {
             $organizationId = Admin::loggedUserData()['organizationId'];
 
-            if ($request->file('event_photo')) {
-                $imagePath = $request->file('event_photo');
+            if ($request->file('event_photo_file')) {
+                $imagePath = $request->file('event_photo_file');
                 $ext = $imagePath->getClientOriginalExtension();
                 //$imageName = $imagePath->getClientOriginalName();
                 $imageName = "event_photo_".uniqid()."_".date('YmdHis').".".$ext;
-                $request->file('event_photo')->storeAs('uploads', $imageName, 'public');
-                $request->request->remove('event_photo');
+                $request->file('event_photo_file')->storeAs('uploads', $imageName, 'public');
                 $request->merge(['event_photo'=> $imageName]);
             }
-            if ($request->file('event_gallery')) {
-                $imagePath = $request->file('event_gallery');
+            if ($request->file('event_gallery_file')) {
+                $imagePath = $request->file('event_gallery_file');
                 $ext = $imagePath->getClientOriginalExtension();
                 //$imageName = $imagePath->getClientOriginalName();
                 $imageName = "event_gallery_".uniqid()."_".date('YmdHis').".".$ext;
-                $request->file('event_gallery')->storeAs('uploads', $imageName, 'public');
-                $request->request->remove('event_gallery');
+                $request->file('event_gallery_file')->storeAs('uploads', $imageName, 'public');
                 $request->merge(['event_gallery'=> $imageName]);
             }
             $model = new EventParent($request->all());

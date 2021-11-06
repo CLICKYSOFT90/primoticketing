@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Organizations')
+@section('title', 'Parent Events')
 @section('content_header')
 @stop
 @section('content')
@@ -12,7 +12,7 @@
             <div class="actions">
                 <div class="btn-group btn-group-devided">
                     @if(\Common::canCreate($module))
-                        <a href="{{  route('organization.create') }}" class="btn green btn-outline">
+                        <a href="{{  route('eventManager.create') }}" class="btn green btn-outline">
                             Create Organization <i class="fa fa-plus"></i>
                         </a>
                     @endif
@@ -25,17 +25,39 @@
         </div>
         <div class="portlet-body">
             <table class="table table-striped table-bordered table-hover dt-responsive dataTable no-footer dtr-inline collapsed"
-                   id="userTable" role="grid" aria-describedby="userTable_info" style="width: 1186px;">
+                   id="userTable" role="grid" aria-describedby="userTable_info" style="width: 100%">
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Organization</th>
-                    <th>Contact Name</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
+                    <th>Event Name</th>
+                    <th>Nested Events</th>
+                    <th>Total Tickets Sold</th>
                     <th>Action</th>
-                    <th>Status</th>
-
+                </tr>
+                </thead>
+            </table>
+            <!-- /.table-responsive -->
+        </div>
+        <!-- /.portlet -->
+    </div>
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption font-green">
+                <i class="icon-user font-green"></i>
+                <span class="caption-subject bold uppercase">UPCOMING EVENTS</span>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <table class="table table-striped table-bordered table-hover dt-responsive dataTableChild no-footer dtr-inline collapsed"
+                   id="userTables" role="grid" aria-describedby="userTable_info" style="width: 100%">
+                <thead>
+                <tr>
+                    <th>Event ID</th>
+                    <th>Event Name</th>
+                    <th>Sub Event Title</th>
+                    <th>Tickets Sold</th>
+                    <th>Event Date</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
             </table>
@@ -48,7 +70,10 @@
 @section('css')
     <style>
 
-        body .dt-button.buttons-csv { display: none}
+         body .dt-button.buttons-csv { display: none}
+        table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before, table.dataTable.dtr-inline.collapsed>tbody>tr>th:first-child:before{
+            display: none;
+        }
     </style>
 @stop
 
@@ -64,17 +89,15 @@
                 iDisplayLength: 100,
                 aaSorting: [[0, "desc"]],
                 ajax: {
-                    url: "{{ route('organization.index') }}",
+                    url: "{{ route('eventManager.index') }}",
                 },
                 columns: [
 
                     {data: 'id'},
-                    {data: 'organization_name'},
-                    {data: 'organization_contact_name'},
-                    {data: 'organization_contact_phone_number'},
-                    {data: 'email'},
+                    {data: 'name'},
+                    {data: 'nested_events', searchable: false, sortable: false},
+                    {data: 'total_tickets_sold', searchable: false, sortable: false},
                     {data: 'action', searchable: false, sortable: false},
-                    {data: 'active'},
 
                 ],
                 dom: 'lBfrtip',
@@ -83,7 +106,7 @@
                         extend: 'csv',
                         footer: false,
                         exportOptions: {
-                            columns: [0,1,2,3,4,6]
+                            columns: [0,1,2,3]
                         }
 
                     },
@@ -91,20 +114,35 @@
                 ],
                 "fnRowCallback": function (nRow, aData, iDisplayIndex) {
                     var row = $(nRow);
-                    row.attr("id", 'user_' + aData['7']);
-                    var userID = aData['0'];
+                    row.attr("id", 'user_' + aData['1']);
 
-                   // var userImage = aData['2'];
+                }
+            });
 
-//            if(userImage == null) {
-//                userImage = '../images/avatar/no-image.png'
-//            } else {
-//                userImage = '../images/avatar/' + userImage;
-//            }
-//
-//            $(row.find("td")['2']).html(
-//                '<img style="width:9em ;height:8em;" src="' + userImage + '"/>'
-//            );
+            var table2 = $('.dataTableChild').DataTable({
+                serverSide: true,
+                searching: false,
+                iDisplayLength: 100,
+                "bLengthChange": false,
+                aaSorting: [[0, "desc"]],
+                ajax: {
+                    url: "{{ route('getChildEvent') }}",
+                },
+                columns: [
+
+                    {data: 'id', searchable: false, sortable: false},
+                    {data: 'parent_name', searchable: false, sortable: false},
+                    {data: 'name', searchable: false, sortable: false},
+                    {data: 'total_tickets_sold', searchable: false, sortable: false},
+                    {data: 'event_start', searchable: false, sortable: false},
+                    {data: 'action', searchable: false, sortable: false},
+
+                ],
+
+                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                    var row = $(nRow);
+                    row.attr("id", 'user_' + aData['1']);
+
                 }
             });
 

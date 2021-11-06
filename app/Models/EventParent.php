@@ -39,12 +39,40 @@ class EventParent extends BaseModel
         return $this->hasMany(EventTicket::class, 'parent_event_id', 'id');
     }
 
+    public static function getList()
+    {
+        $return = self::with('childEvent')->get();
+        return $return;
+    }
+
+    public static function actionButtons($data){
+        $return = '<div class="btn-group" role="group">';
+
+        if(\Common::canUpdate(static::$module)) {
+            $return .= '<a class="" href="'.route('eventManager.edit', $data->id).'" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>';
+        }
+
+        /* if(\Common::canDelete(static::$module)) {
+            $return .= '<form class="form-inline" action="'.route('organization.destroy', $data->id).'" method="post" id="delete_form_'.$data->id.'">
+                             <input type="hidden" name="_method" value="DELETE">
+                             <input type="hidden" name="_token" value="'.csrf_token().'">
+                             <a class=" delete-confirm-id" title="Delete" data-id="'.$data->id.'">
+                                 <i class="fas fa-trash"></i>
+                             </a>
+                         </form>';
+         }*/
+        $return .= '</div>';
+        return $return;
+    }
+
     public static function validationRules($id=0){
         $rules['name'] = ['required'];
         $rules['event_type_id'] = ['required'];
 
-        $rules['event_photo'] = [$id==0 ? 'required' : 'nullable','mimes:jpeg,png,jpg,gif,svg|max:2048'];
-        $rules['event_gallery'] = [$id==0 ? 'required' : 'nullable','mimes:jpeg,png,jpg,gif,svg|max:2048'];
+        $rules['event_photo_file'] = [$id==0 ? 'required' : 'nullable','mimes:jpeg,png,jpg,gif,svg|max:2048'];
+        $rules['event_gallery_file'] = [$id==0 ? 'required' : 'nullable','mimes:jpeg,png,jpg,gif,svg|max:2048'];
 
         $rules['CERow.*.name'] = ['required'];
         $rules['CERow.*.event_icon'] = [$id==0 ? 'required' : 'nullable','mimes:jpeg,png,jpg,gif,svg|max:2048'];
@@ -52,7 +80,7 @@ class EventParent extends BaseModel
         $rules['CERow.*.event_end'] = ['required','date','after:CERow.*.event_start'];
         $rules['CERow.*.address'] = ['required'];
 
-        $rules['TTRow.*.ticket_type_id'] = ['required'];
+        $rules['TTRow.*.ticket_type_id'] = ['required','distinct'];
         $rules['TTRow.*.ticket_default_price'] = ['required','numeric'];
         $rules['TTRow.*.ticket_default_limit'] = ['required','numeric'];
         return $rules;
@@ -63,13 +91,13 @@ class EventParent extends BaseModel
         $msgs['name.required'] = 'Event name is required.';
         $msgs['event_type_id.required'] = 'Event type is required.';
 
-        $msgs['event_photo.required'] = 'Event photo is required.';
-        $msgs['event_photo.mimes'] = 'Event photo only allowed the following format(jpeg,png,jpg,gif,svg).';
-        $msgs['event_photo.max'] = 'Event photo maximum file size is 2 Mb.';
+        $msgs['event_photo_file.required'] = 'Event photo is required.';
+        $msgs['event_photo_file.mimes'] = 'Event photo only allowed the following format(jpeg,png,jpg,gif,svg).';
+        $msgs['event_photo_file.max'] = 'Event photo maximum file size is 2 Mb.';
 
-        $msgs['event_gallery.required'] = 'Event gallery photo is required.';
-        $msgs['event_gallery.mimes'] = 'Event gallery photo only allowed the following format(jpeg,png,jpg,gif,svg).';
-        $msgs['event_gallery.max'] = 'Event gallery photo maximum file size is 2 Mb.';
+        $msgs['event_gallery_file.required'] = 'Event gallery photo is required.';
+        $msgs['event_gallery_file.mimes'] = 'Event gallery photo only allowed the following format(jpeg,png,jpg,gif,svg).';
+        $msgs['event_gallery_file.max'] = 'Event gallery photo maximum file size is 2 Mb.';
 
         foreach(request()->input('CERow') as $key => $value) {
             $msgs['CERow.'.$key.'.name.required'] = 'Event List event name is required on row #'.$key.".";
@@ -88,6 +116,7 @@ class EventParent extends BaseModel
             $msgs['CERow.'.$key.'.address.required'] = 'Event List address is required on row #'.$key.".";
 
             $msgs['TTRow.'.$key.'.ticket_type_id.required'] = 'Ticket name is required on row #'.$key.".";
+            $msgs['ETRow.'.$key.'.ticket_type_id.distinct'] = 'Ticket name is duplicate on row #'.$key.".";
 
             $msgs['TTRow.'.$key.'.ticket_default_price.required'] = 'Default price is required on row #'.$key.".";
             $msgs['TTRow.'.$key.'.ticket_default_price.numeric'] = 'Only numeric data is allowed in default price field on row #'.$key.".";

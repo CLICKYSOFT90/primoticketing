@@ -37,16 +37,16 @@
                 <div class="formfieldholder">
                     <label>Event Photo</label>
                     @if($model->exists)
-                    <div>fff</div>
+                    <div><img src="{{ asset("storage/uploads/$model->event_photo")}}" width="100" height="100"></div>
                     @endif
-                    <input type="file" name="event_photo" id="event_photo">
+                    <input type="file" name="event_photo_file" id="event_photo_file">
                 </div>
                 <div class="formfieldholder">
                     <label>Event Gallery</label>
                     @if($model->exists)
-                        <div>fff</div>
+                        <div><img src="{{ asset("storage/uploads/$model->event_gallery")}}" width="100" height="100"></div>
                     @endif
-                    <input type="file" name="event_gallery" id="event_gallery">
+                    <input type="file" name="event_gallery_file" id="event_galleryfile">
                 </div>
                 <br>
                 <br>
@@ -67,15 +67,21 @@
 @section('js')
     <script>
         jQuery('.datepicker').datetimepicker({
-            format:'Y-m-d H:i',
+            format:'m/d/Y H:i',
             //startDate:'2021/11/03',
             //inline:false,
             lang:'en'
         });
-    </script>
-    <script>
+
         // Login Function
         $(document).ready(function () {
+            //onchange();
+            setTimeout(function () {
+                $("body #event_type_id").trigger("change");
+            },1000);
+
+            //alert("dd");
+
             $("body").on("click", ".save_btn.event", function (e) {
 
 
@@ -104,7 +110,7 @@
             $("body").on("click", ".add_event", function (e) {
                 //$("body .datepicker").datetimepicker('remove'); //detach
                 jQuery('.datepicker').datetimepicker({
-                    format:'Y-m-d H:i',
+                    format:'m/d/Y H:i',
                     lang:'en'
                 });
 
@@ -123,6 +129,8 @@
 
             });
             $("body").on("change", "#event_type_id", function (e) {
+                var ticketTypes = "{{$tickets}}";
+                ticketTypes = JSON.parse(ticketTypes.replace(/&quot;/g,'"'));
 
                 if($(this).val() != ""){
                     $.ajax({
@@ -137,17 +145,71 @@
                      .then(function (data) {
                          if(data.length > 0){
                              var html = "<option value=''>Select</option>";
+                             //var selected ="";
+
                              for(var i=0; i< data.length ; i++){
-                                html+='<option data-limit="'+data[i].default_limit+'" data-price="'+data[i].default_price+'" value="'+data[i].id+'">' +
+                                 var default_limit =  data[i].default_limit;
+                                 var default_price =  data[i].default_price;
+                                 var selected ="";
+                                 html+='<option '+selected+' data-limit="'+default_limit+'" data-price="'+default_price+'" value="'+data[i].id+'">' +
                                     data[i].name +
                                     '</option>';
                              }
+
                              $("body .ticket_type_dropdown")
                                  .find('option')
                                  .remove()
                                  .end()
                                  .append(html)
                                  .trigger('change');
+
+                             $( "body .ticket_type_dropdown" ).each(function() {
+                                 //console.log( $(this).options);
+                                 var usedIndex = [];
+                                 var parentRef = $(this);
+                                 var selected = "";
+                                  $(this).find('option').each(function () {
+                                      if($(this).val()!="") {
+                                          var removeIndex = ticketTypes.map(function (item) {
+                                              return parseInt(item.ticket_type_id);
+                                          }).indexOf(parseInt($(this).val()));
+
+                                          if (removeIndex !== -1) {
+
+                                              if(jQuery.inArray( removeIndex, usedIndex )===-1) {
+                                                 // console.log(removeIndex);
+                                                  default_limit = ticketTypes[removeIndex].ticket_default_limit;
+                                                  default_price = ticketTypes[removeIndex].ticket_default_price;
+                                                  selected = 'selected="selected"';
+                                                  $(this).attr('data-limit', default_limit);
+                                                  $(this).attr('data-price', default_price);
+                                                  $(this).attr('selected', selected);
+                                              }
+                                              usedIndex.push(removeIndex);
+
+                                          }
+                                          //console.log($(this).val());
+                                          //console.log($(this).attr('data-limit'));
+                                      }
+                                  });
+                                  $(parentRef).trigger("change");
+
+                             });
+                             /*var removeIndex = ticketTypes.map(function(item) {return parseInt(item.ticket_type_id); }).indexOf(parseInt(data[i].id));
+
+                             if (removeIndex !== -1) {
+
+                                 console.log("found"+ jQuery.inArray( removeIndex, usedIndex ));
+                                 console.log("ri"+removeIndex);
+                                 if(jQuery.inArray( removeIndex, usedIndex )===-1) {
+                                     default_limit = ticketTypes[removeIndex].ticket_default_limit;
+                                     default_price = ticketTypes[removeIndex].ticket_default_price;
+                                     selected = 'selected="selected"';
+                                 }
+
+                                 usedIndex.push(removeIndex);
+                                 //ticketTypes.splice(removeIndex, 1);
+                             }*/
 
 
                          }else{
@@ -157,7 +219,7 @@
                                  .end()
                                  .append('<option value="">No ticket type found against selected event category.</option>').trigger('change');
                          }
-                            console.log(data);
+
                      });
 
                 }else{

@@ -30,7 +30,7 @@
       </td>
       <td>
         @if(old('CERow.'.($i).'.event_icon', @$CE[$i-1]['event_icon']))
-          <div>fffsss</div>
+          <div><img src="{{ asset("storage/uploads/". @$CE[$i-1]['event_icon'])}}" width="50" height="50"></div>
          @endif
         <input type="file" name="CERow[{{$i}}][event_icon]" id="CERow-{{$i}}-event_icon" class="form-control" >
       </td>
@@ -38,10 +38,10 @@
         <input type="text" name="CERow[{{$i}}][name]" id="CERow-{{$i}}-name" class="form-control" value="{{ old('CERow.'.($i).'.name', @$CE[$i-1]['name']) }}">
       </td>
       <td>
-        <input type="text" name="CERow[{{$i}}][event_start]" id="CERow-{{$i}}-event_start" class="form-control datepicker" value="{{ old('CERow.'.($i).'.event_start', @$CE[$i-1]['event_start']) }}">
+        <input type="text" name="CERow[{{$i}}][event_start]" id="CERow-{{$i}}-event_start" class="form-control datepicker" value="{{ old('CERow.'.($i).'.event_start', \App\Helpers\Common::CTL(@$CE[$i-1]['event_start'])) }}">
       </td>
       <td>
-        <input type="text" name="CERow[{{$i}}][event_end]" id="CERow-{{$i}}-event_end" class="form-control datepicker" value="{{ old('CERow.'.($i).'.event_end', @$CE[$i-1]['event_end']) }}">
+        <input type="text" name="CERow[{{$i}}][event_end]" id="CERow-{{$i}}-event_end" class="form-control datepicker" value="{{ old('CERow.'.($i).'.event_end', \App\Helpers\Common::CTL(@$CE[$i-1]['event_end'])) }}">
       </td>
       <td>
         <select name="CERow[{{$i}}][active]" id="CERow-{{$i}}-active" class="form-control">

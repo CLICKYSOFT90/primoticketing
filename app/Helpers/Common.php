@@ -357,7 +357,8 @@ class Common
         }
 
         if (empty($dateFormat)) {
-            $dateFormat = SELF::getConfig('company', 'dateFormat');
+            //$dateFormat = SELF::getConfig('company', 'dateFormat');
+            $dateFormat = "m/d/Y";
         }
 
         if ($is_date) {

@@ -62,6 +62,7 @@ Route::middleware(['auth:admin', 'permissions'])->namespace('Admin')->prefix('ad
     Route::resource('globalSetting', 'GlobalSetting\ManageGlobalSettingController');
     Route::resource('eventManager', 'EventManager\ManageEventManagerController');
     Route::post('getEventTypeTicket', 'EventManager\ManageEventManagerController@getEventTypeTicket')->name('getEventTypeTicket');
+    Route::get('getChildEvent', 'EventManager\ManageEventManagerController@getChildEvent')->name('getChildEvent');
 
     /*Change Password*/
     Route::get('changePassword', 'Users\ChangePasswordController@index')->middleware('auth')->name('change-password');
