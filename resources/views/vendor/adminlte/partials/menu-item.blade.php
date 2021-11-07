@@ -1,6 +1,6 @@
 <?php
 use App\managers\UserManager;
-$user = \Illuminate\Support\Facades\Auth::user();
+$user = \Illuminate\Support\Facades\Auth::guard('admin')->user();
 ?>
 @if(!empty($user))
 @if ((!isset($item['topnav']) || (isset($item['topnav']) && !$item['topnav'])) && (!isset($item['topnav_right']) || (isset($item['topnav_right']) && !$item['topnav_right'])) && (!isset($item['topnav_user']) || (isset($item['topnav_user']) && !$item['topnav_user'])))

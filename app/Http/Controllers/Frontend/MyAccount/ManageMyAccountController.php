@@ -20,12 +20,12 @@ class ManageMyAccountController extends Controller
     //
     public function index()
     {
-        $data = [];
+        /*$data = [];
         $accountDetail = Website::getAccountDetail();
         //dd($accountDetail);
         if($accountDetail['success']==true){
             $data = $accountDetail['data'];
-        }
+        }*/
         //dd($data);
         return view($this->mainViewFolder . 'myaccount',compact('data'));
     }

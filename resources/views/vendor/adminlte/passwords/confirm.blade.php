@@ -23,12 +23,12 @@
             <a href="{{ $dashboard_url }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
         </div>
 
-        <div class="lockscreen-name">{{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}</div>
+        <div class="lockscreen-name">{{{ isset(Auth::guard('admin')->user()->name) ? Auth::user()->name : Auth::guard('admin')->user()->email }}}</div>
 
         <div class="lockscreen-item">
             @if(config('adminlte.usermenu_image'))
             <div class="lockscreen-image">
-                <img src="{{ Auth::user()->adminlte_image() }}" alt="{{ Auth::user()->name }}">
+                <img src="{{ Auth::guard('admin')->user()->adminlte_image() }}" alt="{{ Auth::guard('admin')->user()->name }}">
             </div>
             @endif
 

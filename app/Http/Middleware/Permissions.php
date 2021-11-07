@@ -23,8 +23,7 @@ class Permissions
         } catch (\Exception $e) {
             return redirect()->back()->withErrors([$e->getMessage()]);
         }
-
-        if (in_array($request->user()->alphaRole, [UserManager::AlphaRoleSuper]))
+        if (in_array(auth()->guard('admin')->user()->alphaRole, [UserManager::AlphaRoleSuper]))
             return $next($request);
 
         /* @permission for Controllers */

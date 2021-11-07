@@ -81,7 +81,7 @@
                         <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                         <li class="dropdown dropdown-user dropdown-dark">
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true" aria-expanded="false">
-                                <span class="username username-show-on-mobile"> {{ Auth::user()->name }}  </span>
+                                <span class="username username-show-on-mobile"> {{ Auth::guard('admin')->user()->name }}  </span>
                                 <i class="fa fa-angle-down"></i>
                                 <!-- DOC: Do not remove below empty space(&nbsp;) as its purposely used -->
                             </a>

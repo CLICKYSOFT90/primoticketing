@@ -16,8 +16,9 @@ class ManageHomeController extends Controller
 {
     protected $mainViewFolder = 'frontend.';
     //
-    public function index()
+    public function index($prefix = false)
     {
+        echo $prefix;
         echo "Welcome to website.";
         return false;
 

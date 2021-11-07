@@ -12,16 +12,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'Frontend\Home\ManageHomeController@index')->name('front');
-Route::get('/home', 'Frontend\Home\ManageHomeController@index')->name('front');
-Route::get('webhookServiceAddress',function(){
-    \App\Models\Address::syncAddresses();
-    dd("synced");
-});
-Route::post('webhookServiceAddress',function(){
-    \App\Models\Address::syncAddresses();
-    dd("synced");
-})->name('webhookServiceAddress');
+//Route::get('/', 'Frontend\Home\ManageHomeController@index')->name('front');
+//Route::get('/home', 'Frontend\Home\ManageHomeController@index')->name('front');
+
 
 Route::prefix('admin')->group(function() {
     Route::get('/login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.login');
@@ -36,14 +29,14 @@ Route::prefix('admin')->group(function() {
 
 });
 
-Route::middleware(['auth:admin'])->prefix('admin')->namespace('Admin')->group(function () {
+Route::middleware(['admin.auth'])->prefix('admin')->namespace('Admin')->group(function () {
     Route::get('/{url?}', 'Dashboard\ManageDashboardController@index')->where('url','dashboard|')->name('admin.dashboard');
     //Route::get('dashboard', 'Dashboard\ManageDashboardController@index')->name('dashboard');
     //Route::get('home', 'Dashboard\ManageDashboardController@index');
     //Route::post('dashboard', 'Dashboard\ManageDashboardController@index')->name('dashboard');
     Route::post('select2Ajax', function() { Common::select2Ajax(); })->name('select2Ajax');
 });
-Route::middleware(['auth:admin', 'permissions'])->namespace('Admin')->prefix('admin')->group(function () {
+Route::middleware(['admin.auth', 'permissions'])->namespace('Admin')->prefix('admin')->group(function () {
     Route::resource('users', 'Users\ManageUsersController');
     Route::resource('configuration', 'Configuration\ManageConfigurationController');
     Route::resource('roles', 'Users\RolesController');
@@ -70,41 +63,47 @@ Route::middleware(['auth:admin', 'permissions'])->namespace('Admin')->prefix('ad
     /**/
 });
 
-Route::group([
-    'namespace' => 'Auth',
-], function () {
-
-    // Authentication Routes...
-    Route::get('login', 'WebsiteLoginController@showLoginForm')->name('login_page');
-    Route::post('login', 'WebsiteLoginController@login')->name('login');
-    Route::get('logout', 'WebsiteLoginController@logout')->name('logout');
-
-    // Registration Routes...
-    Route::get('register', 'RegisterController@showRegistrationForm')->name('register_page');
-    Route::post('register', 'RegisterController@register')->name('register');
-    Route::get('register/activate/{token}', 'RegisterController@confirm')->name('email_confirm');
-
-    // Password Reset Routes...
-    Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.request');
-    Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-    Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
-    Route::post('password/reset', 'ResetPasswordController@reset');
-
-});
-Route::middleware(['auth:web'])->group(function () {
-    Route::get('cart', 'Frontend\Cart\ManageCartController@index')->name('cart');
-    Route::get('add-to-cart/{id}', 'Frontend\Cart\ManageCartController@addToCart')->name('add.to.cart');
-    Route::patch('update-cart', 'Frontend\Cart\ManageCartController@update')->name('update.cart');
-    Route::delete('remove-from-cart', 'Frontend\Cart\ManageCartController@remove')->name('remove.from.cart');
-    Route::get('checkout', 'Frontend\Cart\ManageCartController@checkout')->name('checkout');
-    Route::post('payment', 'Frontend\Cart\ManageCartController@payment')->name('payment');
-    Route::get('myaccount', 'Frontend\MyAccount\ManageMyAccountController@index')->name('myaccount');
-    Route::post('delete-service', 'Frontend\MyAccount\ManageMyAccountController@removeService')->name('remove.service');
 
 
+
+Route::prefix('{url}')->middleware(['unique.store'])->group(function() {
+    Route::get('', 'Frontend\Home\ManageHomeController@index');
+    Route::group([
+        'namespace' => 'Auth',
+    ], function () {
+
+        // Authentication Routes...
+        Route::get('login', 'WebsiteLoginController@showLoginForm')->name('login_page');
+        Route::post('login', 'WebsiteLoginController@login')->name('login');
+        Route::get('logout', 'WebsiteLoginController@logout')->name('logout');
+
+        // Registration Routes...
+        Route::get('register', 'RegisterController@showRegistrationForm')->name('register_page');
+        Route::post('register', 'RegisterController@register')->name('register');
+        Route::get('register/activate/{token}', 'RegisterController@confirm')->name('email_confirm');
+
+        // Password Reset Routes...
+        Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.request');
+        Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+        Route::get('password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
+        Route::post('password/reset', 'ResetPasswordController@reset');
+
+    });
+    Route::middleware(['website.auth'])->group(function () {
+        Route::get('cart', 'Frontend\Cart\ManageCartController@index')->name('cart');
+        Route::get('add-to-cart/{id}', 'Frontend\Cart\ManageCartController@addToCart')->name('add.to.cart');
+        Route::patch('update-cart', 'Frontend\Cart\ManageCartController@update')->name('update.cart');
+        Route::delete('remove-from-cart', 'Frontend\Cart\ManageCartController@remove')->name('remove.from.cart');
+        Route::get('checkout', 'Frontend\Cart\ManageCartController@checkout')->name('checkout');
+        Route::post('payment', 'Frontend\Cart\ManageCartController@payment')->name('payment');
+        Route::get('myaccount', 'Frontend\MyAccount\ManageMyAccountController@index')->name('myaccount');
+        Route::post('delete-service', 'Frontend\MyAccount\ManageMyAccountController@removeService')->name('remove.service');
+
+
+    });
 });
 /*API*/
-Route::post('API', 'API\ManageAPIController@index');
+/*Route::post('API', 'API\ManageAPIController@index');*/
 
 
 Route::get('migrate',function(){
