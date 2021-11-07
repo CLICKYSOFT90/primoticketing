@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Organization;
 use Closure;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 
 class UniqueStoreMiddleWare
 {
@@ -21,6 +23,10 @@ class UniqueStoreMiddleWare
         if($route_param==""){
             return redirect(url(""));
         }
+        if(Organization::where('organization_unique_url',$route_param)->where('active',1)->count() == 0){
+            return redirect(url(""));
+        }
+        Session::put('selected_organization',$route_param );
 
        // dd($route_param);
        // dd($route_param['url']);

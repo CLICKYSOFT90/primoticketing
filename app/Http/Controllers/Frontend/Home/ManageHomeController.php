@@ -9,6 +9,7 @@ use App\HomePage;
 use App\Http\Controllers\Controller;
 use App\Models\Website;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Service;
 
@@ -16,11 +17,8 @@ class ManageHomeController extends Controller
 {
     protected $mainViewFolder = 'frontend.';
     //
-    public function index($prefix = false)
+    public function index(Request $request)
     {
-        echo $prefix;
-        echo "Welcome to website.";
-        return false;
 
         return view($this->mainViewFolder .'index');
         

@@ -50,7 +50,6 @@ class WebsiteLoginController extends Controller
 
     public function showLoginForm()
     {
-        dd(request()->headers->get('referer'));
         $acountType = AccountType::get();
         $serviceableAddress = Address::whereNull('addressable_id')->get();
         $accountGroup = AccountGroup::get();
