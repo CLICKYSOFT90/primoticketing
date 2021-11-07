@@ -73,15 +73,7 @@
             lang:'en'
         });
 
-        // Login Function
         $(document).ready(function () {
-            //onchange();
-            setTimeout(function () {
-                $("body #event_type_id").trigger("change");
-            },1000);
-
-            //alert("dd");
-
             $("body").on("click", ".save_btn.event", function (e) {
 
 
@@ -162,56 +154,6 @@
                                  .end()
                                  .append(html)
                                  .trigger('change');
-
-                             $( "body .ticket_type_dropdown" ).each(function() {
-                                 //console.log( $(this).options);
-                                 var usedIndex = [];
-                                 var parentRef = $(this);
-                                 var selected = "";
-                                  $(this).find('option').each(function () {
-                                      if($(this).val()!="") {
-                                          var removeIndex = ticketTypes.map(function (item) {
-                                              return parseInt(item.ticket_type_id);
-                                          }).indexOf(parseInt($(this).val()));
-
-                                          if (removeIndex !== -1) {
-
-                                              if(jQuery.inArray( removeIndex, usedIndex )===-1) {
-                                                 // console.log(removeIndex);
-                                                  default_limit = ticketTypes[removeIndex].ticket_default_limit;
-                                                  default_price = ticketTypes[removeIndex].ticket_default_price;
-                                                  selected = 'selected="selected"';
-                                                  $(this).attr('data-limit', default_limit);
-                                                  $(this).attr('data-price', default_price);
-                                                  $(this).attr('selected', selected);
-                                              }
-                                              usedIndex.push(removeIndex);
-
-                                          }
-                                          //console.log($(this).val());
-                                          //console.log($(this).attr('data-limit'));
-                                      }
-                                  });
-                                  $(parentRef).trigger("change");
-
-                             });
-                             /*var removeIndex = ticketTypes.map(function(item) {return parseInt(item.ticket_type_id); }).indexOf(parseInt(data[i].id));
-
-                             if (removeIndex !== -1) {
-
-                                 console.log("found"+ jQuery.inArray( removeIndex, usedIndex ));
-                                 console.log("ri"+removeIndex);
-                                 if(jQuery.inArray( removeIndex, usedIndex )===-1) {
-                                     default_limit = ticketTypes[removeIndex].ticket_default_limit;
-                                     default_price = ticketTypes[removeIndex].ticket_default_price;
-                                     selected = 'selected="selected"';
-                                 }
-
-                                 usedIndex.push(removeIndex);
-                                 //ticketTypes.splice(removeIndex, 1);
-                             }*/
-
-
                          }else{
                              $("body .ticket_type_dropdown")
                                  .find('option')

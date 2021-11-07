@@ -28,7 +28,29 @@
       </td>
       <td>
         <select name="TTRow[{{$i}}][ticket_type_id]" id="TTRow-{{$i}}-ticket_type_id" class="form-control ticket_type_dropdown">
-          <option value="">Please first select Event Category</option>
+          @if(count($ticketType) > 0)
+            <option value="">Select</option>
+            @foreach($ticketType as $tic)
+              @if($tic->id == @$TT[$i-1]['ticket_type_id']))
+                @php
+                $default_limit =  @$TT[$i-1]['ticket_default_limit'];
+                $default_price =  @$TT[$i-1]['ticket_default_price'];
+                $selected = "selected";
+                @endphp
+              @else
+                @php
+                  $default_limit =  $tic->default_limit;
+                  $default_price =  $tic->default_price;
+                  $selected = "";
+                @endphp
+              @endif
+              <option value="{{$tic->id}}" {{$selected}} data-limit="{{$default_limit}}" data-price="{{$default_price}}" >
+                {{$tic->name}}
+              </option>
+            @endforeach
+          @else
+            <option value="">Please first select Event Category</option>
+          @endif
         </select>
       </td>
       <td>

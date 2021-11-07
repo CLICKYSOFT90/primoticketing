@@ -81,7 +81,7 @@ class ManageEventManagerController extends BaseController
     public function create(Request $request)
     {
         $eventType = EventType::get();
-        $ticketType = TicketType::get();
+        $ticketType = [];
         $model =  new EventParent();
         $childEvent = new EventChild();
         $tickets = new EventTicket();
@@ -102,7 +102,7 @@ class ManageEventManagerController extends BaseController
             return redirect()->route("eventManager.index");
         }
         $eventType = EventType::get();
-        $ticketType = TicketType::get();
+        $ticketType = TicketType::whereIN('event_type_id',[$model->event_type_id,-1])->get();
         $childEvent = EventChild::where('parent_event_id',$model->id)->get();
         $tickets = EventTicket::where('parent_event_id',$model->id)->get();
         return view($this->mainViewFolder . 'form',compact('eventType','ticketType','model','childEvent','tickets'));
